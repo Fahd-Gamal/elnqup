@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>إدارة الموظفين — النقيب العقارية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- css file -->
+    <link rel="stylesheet" href="CSS/dashbord.css">
+    <link rel="stylesheet" href="CSS/nav.css">
+    <link rel="stylesheet" href="CSS/footer.css">
+    <link rel="stylesheet" href="CSS/employee.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+        NAVBAR (موحّد لكل صفحات الموقع)
+    ====================================================== -->
+    <header id="navbar" role="banner">
+
+        <a class="nav-brand" href="dashbord.html">
+            <img src="IMG/logo.png" alt="شعار النقيب للعقارات" class="nav-logo">
+            <div class="nav-brand-text">
+                <span class="nav-name-ar">النقيب للعقارات</span>
+                <span class="nav-name-en">Al Naqeeb Real Estate</span>
+            </div>
+        </a>
+
+        <div class="nq-nav-actions">
+            <!-- Theme toggle -->
+            <button class="theme-btn" id="themeToggle" aria-label="تبديل الوضع المظلم / الفاتح" type="button">
+                <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="#D4AF37" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round" fill="rgba(212,175,55,.10)" />
+                    <circle cx="18.5" cy="3.5" r="1" fill="#D4AF37" opacity=".7" />
+                    <circle cx="21" cy="7" r=".7" fill="#D4AF37" opacity=".5" />
+                    <circle cx="16" cy="2" r=".5" fill="#D4AF37" opacity=".6" />
+                </svg>
+                <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <circle cx="12" cy="12" r="5" stroke="#D4AF37" stroke-width="1.8" fill="rgba(212,175,55,.15)" />
+                    <g stroke="#D4AF37" stroke-width="1.6" stroke-linecap="round">
+                        <line x1="12" y1="2" x2="12" y2="4.5" />
+                        <line x1="12" y1="19.5" x2="12" y2="22" />
+                        <line x1="2" y1="12" x2="4.5" y2="12" />
+                        <line x1="19.5" y1="12" x2="22" y2="12" />
+                        <line x1="4.93" y1="4.93" x2="6.76" y2="6.76" />
+                        <line x1="17.24" y1="17.24" x2="19.07" y2="19.07" />
+                        <line x1="4.93" y1="19.07" x2="6.76" y2="17.24" />
+                        <line x1="17.24" y1="6.76" x2="19.07" y2="4.93" />
+                    </g>
+                </svg>
+            </button>
+
+            <button onclick="toggleMenu()" class="nq-hamburger-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════
+        TOAST
+    ════════════════════════════════════════════════════════ -->
+    <div class="toast" id="successToast" role="status" aria-live="polite">
+        <span class="toast-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+            </svg>
+        </span>
+        <span class="toast-text" id="toastText">تم حفظ التعديلات بنجاح</span>
+    </div>
+
+    <!-- ── ADD EMPLOYEE MODAL ── -->
+    <div class="modal-overlay" id="addModal" role="dialog" aria-modal="true" aria-label="إضافة موظف جديد">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="closeAddModal" aria-label="إغلاق">✕</button>
+            <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                <div
+                    style="width:48px;height:48px;border-radius:50%;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.28);display:flex;align-items:center;justify-content:center;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.7"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                        <line x1="19" y1="8" x2="19" y2="14" />
+                        <line x1="16" y1="11" x2="22" y2="11" />
+                    </svg>
+                </div>
+            </div>
+
+            <h2 class="modal-title">إضافة موظف جديد</h2>
+            <p class="modal-sub">أدخل بيانات الموظف لإنشاء الحساب</p>
+            <form id="addEmpForm" method="post" action="#" novalidate>
+                <input type="hidden" name="__RequestVerificationToken" value="" />
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="add-phone" name="Phone">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="add-password" name="Password">
+                </div>
+                <div class="form-group">
+                    <label>الصلاحية</label>
+                    <select id="add-role" name="Role" class="info-select" style="display:block;">
+                        <option value="Admin">Admin</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Employee" selected>Employee</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-modal-submit">حفظ الموظف</button>
+                    <button type="button" class="btn-modal-cancel" id="cancelAddModal">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ── DELETE CONFIRM MODAL ── -->
+    <div class="modal-overlay delete-modal" id="deleteModal" role="alertdialog" aria-modal="true"
+        aria-label="تأكيد الحذف">
+        <div class="modal-card">
+            <div class="delete-icon-wrap" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(240,100,100,.85)"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                    <path d="M10 11v6M14 11v6" />
+                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                </svg>
+            </div>
+            <h2 class="modal-title">تأكيد الحذف</h2>
+            <p class="modal-sub" style="margin-bottom:8px;">هل أنت متأكد من حذف هذا الموظف؟</p>
+            <p style="font-size:.70rem;color:rgba(240,120,120,.65);text-align:center;margin-bottom:22px;">لا يمكن
+                التراجع عن هذا الإجراء بعد التنفيذ</p>
+            <form id="deleteEmpForm" method="post" action="#">
+                <input type="hidden" id="delete-emp-id" name="id" value="" />
+                <input type="hidden" name="__RequestVerificationToken" value="" />
+                <div class="modal-actions">
+                    <button type="submit" class="btn-modal-delete">حذف الموظف</button>
+                    <button type="button" class="btn-modal-cancel" id="cancelDeleteModal">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ── BLOCK / UNBLOCK STATUS MODAL ── -->
+    <div class="modal-overlay status-modal" id="statusModal" role="alertdialog" aria-modal="true"
+        aria-label="تأكيد تغيير حالة الموظف">
+        <div class="modal-card">
+            <div class="status-icon-wrap" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 8A6 6 0 0 0 6 8v4"></path>
+                    <rect x="5" y="12" width="14" height="8" rx="2"></rect>
+                </svg>
+            </div>
+            <h2 class="modal-title" id="statusTitle">حظر الموظف</h2>
+            <p class="modal-sub" id="statusText" style="margin-bottom:22px;">هل تريد حظر هذا الموظف؟</p>
+            <form id="statusForm" method="post" action="#">
+                <input type="hidden" id="status-emp-id" name="id" value="" />
+                <input type="hidden" name="__RequestVerificationToken" value="" />
+                <div class="modal-actions">
+                    <button type="submit" class="btn-modal-status" id="statusBtn">حظر</button>
+                    <button type="button" class="btn-modal-cancel" id="cancelStatusModal">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ── IMAGE VIEWER MODAL ── -->
+    <div class="modal-overlay img-viewer" id="imgViewerModal" role="dialog" aria-modal="true"
+        aria-label="عرض صورة الهوية">
+        <div class="img-viewer-card">
+            <div class="img-viewer-header">
+                <p class="img-viewer-title" id="imgViewerTitle">صورة البطاقة</p>
+                <button class="img-viewer-close" id="closeImgViewer" aria-label="إغلاق">✕</button>
+            </div>
+            <div class="img-viewer-body">
+                <div class="img-viewer-placeholder" id="imgViewerPlaceholder">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    <p>لم يتم رفع صورة بعد</p>
+                </div>
+                <img id="imgViewerImg" src="IMG/logo.png" alt=""
+                    style="display:none;max-width:100%;border-radius:12px;" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Menu (موحّد لكل صفحات الموقع) -->
+    <div id="sideMenu" class="glass nq-side-menu">
+        <div class="nq-side-menu-head">
+            <button onclick="toggleMenu()" class="nq-side-menu-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="nq-side-menu-links">
+            <a href="dashbord.html" class="nq-side-menu-link">
+                <i class="fa-solid fa-building w-6"></i>
+                <span>العقارات</span>
+            </a>
+            <a href="clientRequste.html" class="nq-side-menu-link">
+                <i class="fa-solid fa-handshake"></i>
+                <span>طلبات العملاء</span>
+            </a>
+            <a href="employee.html" class="nq-side-menu-link">
+                <i class="fa-solid fa-users w-6"></i>
+                <span>الموظفون</span>
+            </a>
+            <!-- <a href="#" class="block py-3 px-4 hover:bg-white/10 rounded-2xl transition-colors flex items-center gap-4">
+                                    <i class="fa-solid fa-chart-pie w-6"></i>
+                                    <span>التقارير</span>
+                                </a> -->
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+        PAGE
+    ════════════════════════════════════════════════════════ -->
+
+    <main class="em-shell">
+
+        <!-- ─── STATS STRIP ─── -->
+        <div class="stats-strip" role="list" aria-label="إحصائيات الموظفين">
+            <div class="stat-pill" role="listitem">
+                <span class="stat-dot dot-gold"></span>
+                <span class="stat-val">6</span>
+                <span class="stat-lbl">أشخاص</span>
+            </div>
+            <div class="stat-pill" role="listitem">
+                <span class="stat-dot dot-green"></span>
+                <span class="stat-val">5</span>
+                <span class="stat-lbl">نشط</span>
+            </div>
+            <div class="stat-pill" role="listitem">
+                <span class="stat-dot dot-muted"></span>
+                <span class="stat-val">1</span>
+                <span class="stat-lbl">غير نشط</span>
+            </div>
+            <div class="stat-pill" role="listitem">
+                <span class="stat-dot" style="background:rgba(212,175,55,.55);"></span>
+                <span class="stat-val">2</span>
+                <span class="stat-lbl">موظف</span>
+            </div>
+            <div class="stat-pill" role="listitem">
+                <span class="stat-dot" style="background:rgba(212,175,55,.55);"></span>
+                <span class="stat-val">1</span>
+                <span class="stat-lbl">مدير</span>
+            </div>
+            <div class="stat-pill" role="listitem">
+                <span class="stat-dot" style="background:rgba(212,175,55,.55);"></span>
+                <span class="stat-val">3</span>
+                <span class="stat-lbl">مالك</span>
+            </div>
+        </div>
+
+        <!-- ─── SECTION LABEL ─── -->
+        <div class="sec-label" aria-hidden="true">
+            <span class="sec-label-text">قائمة الموظفين</span>
+            <span class="sec-label-rule"></span>
+        </div>
+
+        <!-- ─── EMPLOYEE LIST ─── -->
+        <div class="emp-list" role="list" aria-label="الموظفون">
+
+            <!-- ══ EMPLOYEE 1 ══ -->
+            <article class="emp-card" data-emp-id="1" role="listitem">
+                <div class="emp-row" role="button" tabindex="0" aria-expanded="false" aria-controls="details-1"
+                    aria-label="عرض تفاصيل: أحمد محمد السالم">
+                    <div class="emp-avatar-wrap">
+                        <div class="emp-avatar" aria-hidden="true">أح</div>
+                        <span class="emp-status-dot status-active" aria-label="نشط"></span>
+                        <div class="emp-avatar-ring" aria-hidden="true"></div>
+                    </div>
+                    <div class="emp-info">
+                        <p class="emp-name">أحمد محمد السالم</p>
+                        <span class="emp-title-badge">موظف</span>
+                    </div>
+                    <div class="emp-expand-btn" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="emp-details" id="details-1">
+                    <div class="emp-details-inner">
+                        <div class="emp-details-body">
+
+                            <div class="emp-actions">
+                                <button class="btn-emp-edit" type="button" aria-label="تعديل بيانات الموظف">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                    </svg>
+                                    تعديل
+                                </button>
+                                <button class="btn-emp-delete" type="button" aria-label="حذف الموظف">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <polyline points="3 6 5 6 21 6" />
+                                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                    </svg>
+                                    حذف
+                                </button>
+                                <button class="btn-emp-status" type="button" aria-label="حظر الموظف"
+                                    data-blocked="false">
+                                    <svg class="status-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M18 8A6 6 0 0 0 6 8v4"></path>
+                                        <rect x="5" y="12" width="14" height="8" rx="2"></rect>
+                                    </svg>
+                                    <span>حظر</span>
+                                </button>
+                                <button class="btn-emp-save" type="button" aria-label="حفظ التعديلات">حفظ</button>
+                                <button class="btn-emp-cancel" type="button" aria-label="إلغاء التعديل">إلغاء</button>
+                            </div>
+
+                            <div class="emp-info-section">
+                                <p class="emp-section-title">البيانات الشخصية</p>
+                                <div class="info-grid">
+
+                                    <div class="info-field">
+                                        <span class="info-label">الاسم بالكامل</span>
+                                        <span class="info-value">أحمد محمد السالم</span>
+                                        <input class="info-input" type="text" name="FullName" value="أحمد محمد السالم"
+                                            aria-label="الاسم بالكامل" />
+                                    </div>
+
+                                    <div class="info-field">
+                                        <span class="info-label">رقم الهاتف</span>
+                                        <span class="info-value" dir="ltr">01099879820</span>
+                                        <input class="info-input" type="tel" name="Phone" value="01099879820" dir="ltr">
+                                    </div>
+
+                                    <div class="info-field">
+                                        <span class="info-label">البريد الإلكتروني</span>
+                                        <span class="info-value">ahmed@alnaqeeb.sa</span>
+                                        <input class="info-input" type="email" name="Email" value="ahmed@alnaqeeb.sa"
+                                            aria-label="البريد الإلكتروني" />
+                                    </div>
+
+                                    <div class="info-field">
+                                        <span class="info-label">العمر</span>
+                                        <!-- اللي بيظهر قبل التعديل -->
+                                        <span class="info-value">22 سنة</span>
+                                        <!-- اللي هيظهر وقت التعديل -->
+                                        <input class="info-input" type="date" name="BirthDate" value="2003-07-23">
+                                    </div>
+
+                                    <div class="info-field">
+                                        <span class="info-label">النوع</span>
+                                        <span class="info-value">ذكر</span>
+                                        <select class="info-select" name="Gender" aria-label="النوع">
+                                            <option value="male" selected>ذكر</option>
+                                            <option value="female">أنثى</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="info-field">
+                                        <span class="info-label">الحالة الاجتماعية</span>
+                                        <span class="info-value">متزوج</span>
+                                        <select class="info-select" name="MaritalStatus" aria-label="الحالة الاجتماعية">
+                                            <option value="married" selected>متزوج</option>
+                                            <option value="single">أعزب</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="info-field">
+                                        <span class="info-label">الوظيفة</span>
+                                        <span class="info-value">موظف</span>
+                                        <select class="info-select" name="JobTitle" aria-label="الوظيفة">
+                                            <option value="employee">موظف</option>
+                                            <option value="manager">مدير</option>
+                                            <option value="owner">مالك</option>
+                                        </select>
+                                    </div>
+                                    <div class="info-field">
+                                        <span class="info-label">إعادة تعيين كلمة المرور</span>
+                                        <span class="info-value">********</span>
+                                        <input class="info-input" type="password" name="ResetPassword"
+                                            placeholder="اكتب كلمة مرور جديدة">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="emp-info-section">
+                                <p class="emp-section-title">بيانات الهوية</p>
+                                <div class="id-docs-grid">
+
+                                    <div class="id-doc-card" role="button" tabindex="0"
+                                        aria-label="عرض صورة وجه البطاقة" data-img-src="img/appIcon.png"
+                                        data-img-title="صورة البطاقة — وجه">
+                                        <div class="id-doc-img-area">
+                                            <img src="IMG/logo.png" alt="">
+                                        </div>
+                                        <div class="id-doc-label">
+                                            <span class="id-doc-name">وجه البطاقة</span>
+                                            <span class="id-doc-zoom" aria-hidden="true">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                                    <circle cx="11" cy="11" r="8" />
+                                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                                    <line x1="11" y1="8" x2="11" y2="14" />
+                                                    <line x1="8" y1="11" x2="14" y2="11" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="id-doc-card" role="button" tabindex="0"
+                                        aria-label="عرض صورة ظهر البطاقة" data-img-src="img/appIcon.png"
+                                        data-img-title="صورة البطاقة — ظهر">
+                                        <div class="id-doc-img-area">
+                                            <img src="IMG/appIcon.png" alt="">
+                                        </div>
+                                        <div class="id-doc-label">
+                                            <span class="id-doc-name">ظهر البطاقة</span>
+                                            <span class="id-doc-zoom" aria-hidden="true">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                                    <circle cx="11" cy="11" r="8" />
+                                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                                    <line x1="11" y1="8" x2="11" y2="14" />
+                                                    <line x1="8" y1="11" x2="14" y2="11" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ══ EMPLOYEE 2 ══ -->
+            <article class="emp-card" data-emp-id="2" role="listitem">
+                <div class="emp-row" role="button" tabindex="0" aria-expanded="false" aria-controls="details-2"
+                    aria-label="عرض تفاصيل: سلطان عبدالله الغامدي">
+                    <div class="emp-avatar-wrap">
+                        <div class="emp-avatar" aria-hidden="true">سل</div>
+                        <span class="emp-status-dot status-active" aria-label="نشط"></span>
+                        <div class="emp-avatar-ring" aria-hidden="true"></div>
+                    </div>
+                    <div class="emp-info">
+                        <p class="emp-name">سلطان عبدالله الغامدي</p>
+                        <span class="emp-title-badge">مدير</span>
+                    </div>
+                    <div class="emp-expand-btn" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="emp-details" id="details-2">
+                    <div class="emp-details-inner">
+                        <div class="emp-details-body">
+                            <div class="emp-actions">
+                                <button class="btn-emp-edit" type="button">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                    </svg>
+                                    تعديل
+                                </button>
+                                <button class="btn-emp-delete" type="button">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <polyline points="3 6 5 6 21 6" />
+                                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                    </svg>
+                                    حذف
+                                </button>
+                                <button class="btn-emp-status" type="button" data-blocked="false">
+                                    <svg class="status-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M18 8A6 6 0 0 0 6 8v4"></path>
+                                        <rect x="5" y="12" width="14" height="8" rx="2"></rect>
+                                    </svg>
+                                    <span>حظر</span>
+                                </button>
+                                <button class="btn-emp-save" type="button">حفظ</button>
+                                <button class="btn-emp-cancel" type="button">إلغاء</button>
+                            </div>
+                            <div class="emp-info-section">
+                                <p class="emp-section-title">البيانات الشخصية</p>
+                                <div class="info-grid">
+                                    <div class="info-field"><span class="info-label">الاسم بالكامل</span><span
+                                            class="info-value">سلطان عبدالله الغامدي</span><input class="info-input"
+                                            type="text" name="FullName" value="سلطان عبدالله الغامدي" /></div>
+                                    <div class="info-field">
+                                        <span class="info-label">رقم الهاتف</span>
+                                        <span class="info-value" dir="ltr">01099879820</span>
+                                        <input class="info-input" type="tel" name="Phone" value="01099879820" dir="ltr">
+                                    </div>
+                                    <div class="info-field"><span class="info-label">البريد الإلكتروني</span><span
+                                            class="info-value">sultan@alnaqeeb.sa</span><input class="info-input"
+                                            type="email" name="Email" value="sultan@alnaqeeb.sa" /></div>
+                                    <div class="info-field">
+                                        <span class="info-label">العمر</span>
+                                        <!-- اللي بيظهر قبل التعديل -->
+                                        <span class="info-value">22 سنة</span>
+                                        <!-- اللي هيظهر وقت التعديل -->
+                                        <input class="info-input" type="date" name="BirthDate" value="2003-07-23">
+                                    </div>
+                                    <div class="info-field"><span class="info-label">النوع</span><span
+                                            class="info-value">ذكر</span><select class="info-select" name="Gender">
+                                            <option value="male" selected>ذكر</option>
+                                            <option value="female">أنثى</option>
+                                        </select></div>
+                                    <div class="info-field"><span class="info-label">الحالة الاجتماعية</span><span
+                                            class="info-value">متزوج</span><select class="info-select"
+                                            name="MaritalStatus">
+                                            <option value="married" selected>متزوج</option>
+                                            <option value="single">أعزب</option>
+                                        </select></div>
+                                    <div class="info-field"><span class="info-label">الوظيفة</span><span
+                                            class="info-value">مدير</span><select class="info-select" name="JobTitle">
+                                            <option value="employee">موظف</option>
+                                            <option value="manager" selected>مدير</option>
+                                            <option value="owner">مالك</option>
+                                        </select>
+                                    </div>
+                                    <div class="info-field">
+                                        <span class="info-label">إعادة تعيين كلمة المرور</span>
+                                        <span class="info-value">********</span>
+                                        <input class="info-input" type="password" name="ResetPassword"
+                                            placeholder="اكتب كلمة مرور جديدة">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="emp-info-section">
+                                <p class="emp-section-title">بيانات الهوية</p>
+                                <div class="id-docs-grid">
+
+                                    <div class="id-doc-card" role="button" tabindex="0"
+                                        aria-label="عرض صورة وجه البطاقة" data-img-src="img/appIcon.png"
+                                        data-img-title="صورة البطاقة — وجه">
+                                        <div class="id-doc-img-area">
+                                            <img src="IMG/logo.png" alt="">
+                                        </div>
+                                        <div class="id-doc-label">
+                                            <span class="id-doc-name">وجه البطاقة</span>
+                                            <span class="id-doc-zoom" aria-hidden="true">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                                    <circle cx="11" cy="11" r="8" />
+                                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                                    <line x1="11" y1="8" x2="11" y2="14" />
+                                                    <line x1="8" y1="11" x2="14" y2="11" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="id-doc-card" role="button" tabindex="0"
+                                        aria-label="عرض صورة ظهر البطاقة" data-img-src="img/appIcon.png"
+                                        data-img-title="صورة البطاقة — ظهر">
+                                        <div class="id-doc-img-area">
+                                            <img src="IMG/appIcon.png" alt="">
+                                        </div>
+                                        <div class="id-doc-label">
+                                            <span class="id-doc-name">ظهر البطاقة</span>
+                                            <span class="id-doc-zoom" aria-hidden="true">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                                    <circle cx="11" cy="11" r="8" />
+                                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                                    <line x1="11" y1="8" x2="11" y2="14" />
+                                                    <line x1="8" y1="11" x2="14" y2="11" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ══ EMPLOYEE 3 ══ -->
+            <article class="emp-card" data-emp-id="3" role="listitem">
+                <div class="emp-row" role="button" tabindex="0" aria-expanded="false" aria-controls="details-3"
+                    aria-label="عرض تفاصيل: نورة فهد المطيري">
+                    <div class="emp-avatar-wrap">
+                        <div class="emp-avatar" aria-hidden="true" style="color:rgba(212,175,55,.65);">نو</div>
+                        <span class="emp-status-dot status-active" aria-label="نشط"></span>
+                        <div class="emp-avatar-ring" aria-hidden="true"></div>
+                    </div>
+                    <div class="emp-info">
+                        <p class="emp-name">نورة فهد المطيري</p>
+                        <span class="emp-title-badge">مالك</span>
+                    </div>
+                    <div class="emp-expand-btn" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="emp-details" id="details-3">
+                    <div class="emp-details-inner">
+                        <div class="emp-details-body">
+                            <div class="emp-actions">
+                                <button class="btn-emp-edit" type="button"><svg width="14" height="14"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                    </svg>تعديل</button>
+                                <button class="btn-emp-delete" type="button"><svg width="14" height="14"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <polyline points="3 6 5 6 21 6" />
+                                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                    </svg>حذف</button>
+                                <button class="btn-emp-status" type="button" data-blocked="false"><svg
+                                        class="status-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M18 8A6 6 0 0 0 6 8v4"></path>
+                                        <rect x="5" y="12" width="14" height="8" rx="2"></rect>
+                                    </svg><span>حظر</span></button>
+                                <button class="btn-emp-save" type="button">حفظ</button>
+                                <button class="btn-emp-cancel" type="button">إلغاء</button>
+                            </div>
+                            <div class="emp-info-section">
+                                <p class="emp-section-title">البيانات الشخصية</p>
+                                <div class="info-grid">
+                                    <div class="info-field"><span class="info-label">الاسم بالكامل</span><span
+                                            class="info-value">نورة فهد المطيري</span><input class="info-input"
+                                            type="text" name="FullName" value="نورة فهد المطيري" /></div>
+                                    <div class="info-field">
+                                        <span class="info-label">رقم الهاتف</span>
+                                        <span class="info-value" dir="ltr">01099879820</span>
+                                        <input class="info-input" type="tel" name="Phone" value="01099879820" dir="ltr">
+                                    </div>
+                                    <div class="info-field"><span class="info-label">البريد الإلكتروني</span><span
+                                            class="info-value">noura@alnaqeeb.sa</span><input class="info-input"
+                                            type="email" name="Email" value="noura@alnaqeeb.sa" /></div>
+                                    <div class="info-field">
+                                        <span class="info-label">العمر</span>
+                                        <!-- اللي بيظهر قبل التعديل -->
+                                        <span class="info-value">22 سنة</span>
+                                        <!-- اللي هيظهر وقت التعديل -->
+                                        <input class="info-input" type="date" name="BirthDate" value="2003-07-23">
+                                    </div>
+                                    <div class="info-field"><span class="info-label">النوع</span><span
+                                            class="info-value">أنثى</span><select class="info-select" name="Gender">
+                                            <option value="male">ذكر</option>
+                                            <option value="female" selected>أنثى</option>
+                                        </select></div>
+                                    <div class="info-field"><span class="info-label">الحالة الاجتماعية</span><span
+                                            class="info-value">أعزب</span><select class="info-select"
+                                            name="MaritalStatus">
+                                            <option value="married">متزوج</option>
+                                            <option value="single" selected>أعزب</option>
+                                        </select></div>
+                                    <div class="info-field"><span class="info-label">الوظيفة</span><span
+                                            class="info-value">مالك</span><select class="info-select" name="JobTitle">
+                                            <option value="employee">موظف</option>
+                                            <option value="manager">مدير</option>
+                                            <option value="owner" selected>مالك</option>
+                                        </select>
+                                    </div>
+                                    <div class="info-field">
+                                        <span class="info-label">إعادة تعيين كلمة المرور</span>
+                                        <span class="info-value">********</span>
+                                        <input class="info-input" type="password" name="ResetPassword"
+                                            placeholder="اكتب كلمة مرور جديدة">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="emp-info-section">
+                                <p class="emp-section-title">بيانات الهوية</p>
+                                <div class="id-docs-grid">
+
+                                    <div class="id-doc-card" role="button" tabindex="0"
+                                        aria-label="عرض صورة وجه البطاقة" data-img-src="img/appIcon.png"
+                                        data-img-title="صورة البطاقة — وجه">
+                                        <div class="id-doc-img-area">
+                                            <img src="IMG/logo.png" alt="">
+                                        </div>
+                                        <div class="id-doc-label">
+                                            <span class="id-doc-name">وجه البطاقة</span>
+                                            <span class="id-doc-zoom" aria-hidden="true">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                                    <circle cx="11" cy="11" r="8" />
+                                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                                    <line x1="11" y1="8" x2="11" y2="14" />
+                                                    <line x1="8" y1="11" x2="14" y2="11" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="id-doc-card" role="button" tabindex="0"
+                                        aria-label="عرض صورة ظهر البطاقة" data-img-src="img/appIcon.png"
+                                        data-img-title="صورة البطاقة — ظهر">
+                                        <div class="id-doc-img-area">
+                                            <img src="IMG/appIcon.png" alt="">
+                                        </div>
+                                        <div class="id-doc-label">
+                                            <span class="id-doc-name">ظهر البطاقة</span>
+                                            <span class="id-doc-zoom" aria-hidden="true">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                                    <circle cx="11" cy="11" r="8" />
+                                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                                    <line x1="11" y1="8" x2="11" y2="14" />
+                                                    <line x1="8" y1="11" x2="14" y2="11" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="add-employee-section">
+            <button id="openAddModal" class="add-employee-btn">
+                + إضافة موظف
+            </button>
+        </div>
+    </main>
+    <!-- =====================================================
+        FOOTER (موحّد لكل صفحات الموقع)
+    ====================================================== -->
+    <footer id="footer" role="contentinfo">
+        <p class="footer-copy">
+            جميع الحقوق محفوظة © <b>شركة النقيب للعقارات</b> &nbsp;2026
+        </p>
+        <div class="social-row" role="list" aria-label="روابط التواصل الاجتماعي">
+            <a href="#" class="social-btn" role="listitem" aria-label="واتساب" title="واتساب">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                </svg>
+            </a>
+            <a href="#" class="social-btn" role="listitem" aria-label="فيسبوك" title="فيسبوك">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+            </a>
+            <a href="#" class="social-btn" role="listitem" aria-label="إنستغرام" title="إنستغرام">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg>
+            </a>
+        </div>
+    </footer>
+    <script src="JS/nav.js"></script>
+    <script src="JS/employee.js"></script>
+</body>
+
+</html>

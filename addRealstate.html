@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+<title>إضافة عقار — النقيب العقارية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- CSS Files -->
+<link rel="stylesheet" href="CSS/footer.css">
+<link rel="stylesheet" href="CSS/nav.css">
+<link rel="stylesheet" href="CSS/addRealstate.css">
+</head>
+
+<body>
+<!-- =====================================================
+        NAVBAR
+    ====================================================== -->
+<header id="navbar" role="banner">
+    <a class="nav-brand" href="dashbord.html">
+        <img src="IMG/logo.png" alt="شعار النقيب للعقارات" class="nav-logo">
+        <div class="nav-brand-text">
+            <span class="nav-name-ar">النقيب للعقارات</span>
+            <span class="nav-name-en">Al Naqeeb Real Estate</span>
+        </div>
+    </a>
+
+    <div class="nq-nav-actions">
+        <!-- Theme toggle -->
+        <button class="theme-btn" id="themeToggle" aria-label="تبديل الوضع المظلم / الفاتح" type="button">
+            <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="#D4AF37" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" fill="rgba(212,175,55,.10)" />
+                <circle cx="18.5" cy="3.5" r="1" fill="#D4AF37" opacity=".7" />
+                <circle cx="21" cy="7" r=".7" fill="#D4AF37" opacity=".5" />
+                <circle cx="16" cy="2" r=".5" fill="#D4AF37" opacity=".6" />
+            </svg>
+            <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <circle cx="12" cy="12" r="5" stroke="#D4AF37" stroke-width="1.8" fill="rgba(212,175,55,.15)" />
+                <g stroke="#D4AF37" stroke-width="1.6" stroke-linecap="round">
+                    <line x1="12" y1="2" x2="12" y2="4.5" />
+                    <line x1="12" y1="19.5" x2="12" y2="22" />
+                    <line x1="2" y1="12" x2="4.5" y2="12" />
+                    <line x1="19.5" y1="12" x2="22" y2="12" />
+                    <line x1="4.93" y1="4.93" x2="6.76" y2="6.76" />
+                    <line x1="17.24" y1="17.24" x2="19.07" y2="19.07" />
+                    <line x1="4.93" y1="19.07" x2="6.76" y2="17.24" />
+                    <line x1="17.24" y1="6.76" x2="19.07" y2="4.93" />
+                </g>
+            </svg>
+        </button>
+        <button onclick="toggleMenu()" class="nq-hamburger-btn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+</header>
+
+<div class="ap-shell" style="margin-top: 60px;">
+    <div class="ap-validation-summary" role="alert" aria-live="polite">
+        <!-- MVC renders per-model errors here -->
+        يوجد أخطاء في البيانات. يرجى مراجعة الحقول المحددة أدناه.
+    </div>
+    <form class="ap-form" method="post" enctype="multipart/form-data" action="" novalidate
+        aria-label="نموذج إضافة عقار جديد" id="ap-main-form">
+        <input type="hidden" name="__RequestVerificationToken" value="" />
+
+        <!-- ══════════════════════════════
+        CARD 1 — بيانات العقار
+════════════════════════════════ -->
+        <div class="ap-card" role="region" aria-labelledby="card1-title">
+            <div class="ap-card-head">
+                <div class="ap-card-icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.7"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" />
+                        <line x1="8" y1="21" x2="16" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                    </svg>
+                </div>
+                <h2 class="ap-card-title" id="card1-title">بيانات العقار</h2>
+                <span class="ap-card-rule" aria-hidden="true"></span>
+            </div>
+
+            <div class="ap-card-body">
+                <div class="fields-grid">
+
+                    <!-- اسم العقار — full width -->
+                    <div class="fl-field field-full">
+                        <input class="fl-input" type="text" id="PropertyName" name="PropertyName" placeholder=" "
+                            maxlength="200" autocomplete="off" required aria-required="true"
+                            aria-describedby="PropertyName-err" />
+                        <label class="fl-label" for="PropertyName">
+                            اسم العقار <span class="req">*</span>
+                        </label>
+                        <span class="fl-error-msg" id="PropertyName-err" role="alert"></span>
+                    </div>
+
+                    <!-- (Select) -->
+                    <div class="fl-field">
+                        <input class="fl-input" type="text" id="Location" name="Location" placeholder="مثال: المسلة" required
+                            aria-required="true" aria-describedby="Location-err" />
+                    
+                        <label class="fl-label" for="Location">
+                            المكان <span class="req">*</span>
+                        </label>
+                    
+                        <span class="fl-error-msg" id="Location-err" role="alert"></span>
+                    </div>
+
+                    <!-- نطاق السعر -->
+                    <div class="fl-row">
+                        <!-- أقل سعر -->
+                        <div class="fl-field">
+                            <div class="number-wrap">
+                                <input class="fl-input" type="number" id="MinPrice" name="MinPrice" placeholder=" " min="0" step="500">
+                                <div class="number-controls">
+                                    <button type="button" class="num-btn num-up">
+                                        <i class="fa-solid fa-chevron-up"></i>
+                                    </button>
+                                    <button type="button" class="num-btn num-down">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <label class="fl-label" for="MinPrice">
+                                أقل سعر (ج.م) <span class="req">*</span>
+                            </label>
+                            <span class="fl-error-msg" id="MinPrice-err"></span>
+                        </div>
+                        <!-- أعلى سعر -->
+                        <div class="fl-field">
+                            <div class="number-wrap">
+                                <input class="fl-input" type="number" id="MaxPrice" name="MaxPrice" placeholder=" " min="0" step="500">
+                                <div class="number-controls">
+                                    <button type="button" class="num-btn num-up">
+                                        <i class="fa-solid fa-chevron-up"></i>
+                                    </button>
+                                    <button type="button" class="num-btn num-down">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <label class="fl-label" for="MaxPrice">
+                                أعلى سعر (ج.م)
+                            </label>
+                            <span class="fl-error-msg" id="MaxPrice-err"></span>
+                        </div>
+                    </div>
+                    <!-- عدد الأدوار -->
+                    <div class="fl-field">
+                        <div class="number-wrap">
+                            <input class="fl-input" type="number" id="Floors" name="Floors" placeholder=" " min="1"
+                                max="50" required aria-required="true" aria-describedby="Floors-err" />
+
+                            <label class="fl-label" for="Floors">
+                                عدد الأدوار
+                            </label>
+
+                            <div class="number-controls">
+                                <button type="button" class="num-btn num-up" tabindex="-1">
+                                    <i class="fa-solid fa-chevron-up"></i>
+                                </button>
+
+                                <button type="button" class="num-btn num-down" tabindex="-1">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <span class="fl-error-msg" id="Floors-err" role="alert"></span>
+                    </div>
+
+                    <!-- المساحة -->
+                    <div class="fl-field">
+                        <div class="number-wrap">
+                            <input class="fl-input" type="number" id="Area" name="Area" placeholder=" " min="1"
+                                required aria-required="true" aria-describedby="Area-err" />
+
+                            <label class="fl-label" for="Area">
+                                المساحة (م²) <span class="req">*</span>
+                            </label>
+
+                            <div class="number-controls">
+                                <button type="button" class="num-btn num-up" tabindex="-1">
+                                    <i class="fa-solid fa-chevron-up"></i>
+                                </button>
+
+                                <button type="button" class="num-btn num-down" tabindex="-1">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <span class="fl-error-msg" id="Area-err" role="alert"></span>
+                    </div>
+
+                    <!-- عدد الغرف -->
+                    <div class="fl-field">
+                        <div class="number-wrap">
+                            <input class="fl-input" type="number" id="Rooms" name="Rooms" placeholder=" " min="0"
+                                max="20" required aria-required="true" aria-describedby="Rooms-err" />
+
+                            <label class="fl-label" for="Rooms">
+                                عدد الغرف
+                            </label>
+
+                            <div class="number-controls">
+                                <button type="button" class="num-btn num-up" tabindex="-1">
+                                    <i class="fa-solid fa-chevron-up"></i>
+                                </button>
+
+                                <button type="button" class="num-btn num-down" tabindex="-1">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <span class="fl-error-msg" id="Rooms-err" role="alert"></span>
+                    </div>
+                    <!-- العنوان بالتفصيل — full width -->
+                    <div class="fl-field field-full">
+                        <textarea class="fl-input fl-textarea" id="AddressDetail" name="AddressDetail"
+                            placeholder=" " rows="3" maxlength="500"
+                            aria-describedby="AddressDetail-err"></textarea>
+                        <label class="fl-label" for="AddressDetail">العنوان بالتفصيل</label>
+                        <span class="fl-error-msg" id="AddressDetail-err" role="alert"></span>
+                        <span class="fl-hint">مثال: الفيوم ،المسلة ، شارع 15</span>
+                    </div>
+
+                </div><!-- /fields-grid -->
+            </div>
+        </div><!-- /card 1 -->
+
+        <!-- ══════════════════════════════
+        CARD 2 — بيانات المالك
+════════════════════════════════ -->
+        <div class="ap-card" role="region" aria-labelledby="card2-title">
+            <div class="ap-card-head">
+                <div class="ap-card-icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.7"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </div>
+                <h2 class="ap-card-title" id="card2-title">بيانات المالك</h2>
+                <span class="ap-card-rule" aria-hidden="true"></span>
+            </div>
+
+            <div class="ap-card-body">
+                <div class="owner-grid">
+
+                    <!-- اسم صاحب العقار -->
+                    <div class="fl-field">
+                        <input class="fl-input" type="text" id="OwnerName" name="OwnerName" placeholder=" "
+                            maxlength="120" autocomplete="name" required aria-required="true"
+                            aria-describedby="OwnerName-err" />
+                        <label class="fl-label" for="OwnerName">
+                            اسم صاحب العقار <span class="req">*</span>
+                        </label>
+                        <span class="fl-error-msg" id="OwnerName-err" role="alert"></span>
+                    </div>
+
+                    <!-- رقم هاتف صاحب العقار -->
+                    <div class="fl-field">
+                        <input class="fl-input" type="tel" id="OwnerPhone" name="OwnerPhone" placeholder=" "
+                            maxlength="20" autocomplete="tel" required aria-required="true"
+                            aria-describedby="OwnerPhone-err" dir="ltr" style="text-align:right;" />
+                        <label class="fl-label" for="OwnerPhone">
+                            رقم الهاتف <span class="req">*</span>
+                        </label>
+                        <span class="fl-error-msg" id="OwnerPhone-err" role="alert"></span>
+                        <span class="fl-hint" dir="ltr" style="text-align:right;">01XXXXXXXXX</span>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /card 2 -->
+
+        <!-- ══════════════════════════════
+        CARD 3 — الملاحظات
+════════════════════════════════ -->
+        <div class="ap-card" role="region" aria-labelledby="card3-title">
+            <div class="ap-card-head">
+                <div class="ap-card-icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.7"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                </div>
+                <h2 class="ap-card-title" id="card3-title">الملاحظات</h2>
+                <span class="ap-card-rule" aria-hidden="true"></span>
+            </div>
+
+            <div class="ap-card-body">
+                <div class="fl-field" id="notesWrap">
+                    <textarea class="fl-input fl-textarea fl-notes-textarea" id="Notes" name="Notes"
+                        placeholder="أضف أي ملاحظات خاصة بالعقار..." rows="5" maxlength="1000"
+                        aria-describedby="Notes-hint"></textarea>
+                    <!-- No floating label here — placeholder is intentionally visible -->
+                    <span class="fl-hint" id="Notes-hint">يظهر للموظفين</span>
+                </div>
+                <button type="button" class="btn-add-note" id="addNoteBtn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    <span>إضافة ملاحظة أخرى</span>
+                </button>
+            </div>
+        </div><!-- /card 3 -->
+
+        <!-- ══════════════════════════════
+        CARD 4 — صور العقار
+        Signature: gallery-grid slots with blueprint SVGs
+════════════════════════════════ -->
+        <div class="ap-card" role="region" aria-labelledby="card4-title">
+            <div class="ap-card-head">
+                <div class="ap-card-icon" aria-hidden="true">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.7"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                </div>
+                <h2 class="ap-card-title" id="card4-title">صور العقار</h2>
+                <span class="ap-card-rule" aria-hidden="true"></span>
+            </div>
+
+            <div class="ap-card-body">
+
+                <!-- Counter row -->
+                <div class="upload-counter">
+                    <span class="upload-counter-label">الصور المختارة</span>
+                    <span class="upload-counter-badge" id="imgCountBadge" aria-live="polite">0 / 5 صور</span>
+                </div>
+
+                <!-- Upload drop zone -->
+                <div class="upload-zone" role="button" tabindex="0"
+                    aria-label="انقر أو اسحب الصور هنا لرفعها (حد أقصى 5 صور)" id="uploadZone">
+                    <input type="file" id="PropertyImages" name="PropertyImages" multiple
+                        accept="image/jpeg,image/png,image/webp" aria-label="رفع صور العقار" />
+
+                    <div class="upload-zone-icon" aria-hidden="true">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 16 12 12 8 16" />
+                            <line x1="12" y1="12" x2="12" y2="21" />
+                            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
+                        </svg>
+                    </div>
+                    <p class="upload-zone-title">اسحب الصور هنا أو انقر للاختيار</p>
+                    <p class="upload-zone-hint">
+                        يُقبل <b>JPG · PNG · WebP</b> &nbsp;·&nbsp; حجم أقصى <b>5 MB</b> للصورة &nbsp;·&nbsp; حد
+                        أقصى <b>5 صور</b>
+                    </p>
+                </div>
+
+                <!-- 5 image slot previews -->
+                <div class="img-slots" id="imgSlots" role="list" aria-label="معاينة الصور المختارة">
+                    <div class="img-slot" id="slot-1" role="listitem" aria-label="موقع صورة 1">
+                        <div class="slot-placeholder" aria-hidden="true">
+                            <!-- Architectural blueprint icon per slot -->
+                            <svg width="32" height="32" viewBox="0 0 48 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="6" y="8" width="36" height="32" rx="2" stroke="rgba(212,175,55,.20)"
+                                    stroke-width="1.3" fill="none" />
+                                <line x1="6" y1="20" x2="42" y2="20" stroke="rgba(212,175,55,.14)"
+                                    stroke-width="1" />
+                                <line x1="6" y1="30" x2="42" y2="30" stroke="rgba(212,175,55,.14)"
+                                    stroke-width="1" />
+                                <line x1="18" y1="8" x2="18" y2="40" stroke="rgba(212,175,55,.14)"
+                                    stroke-width="1" />
+                                <line x1="30" y1="8" x2="30" y2="40" stroke="rgba(212,175,55,.14)"
+                                    stroke-width="1" />
+                                <rect x="8" y="10" width="8" height="8" rx="1" fill="rgba(212,175,55,.09)" />
+                                <rect x="20" y="22" width="8" height="6" rx="1" fill="rgba(212,175,55,.12)" />
+                                <rect x="32" y="10" width="8" height="8" rx="1" fill="rgba(212,175,55,.07)" />
+                            </svg>
+                            <span class="slot-num">١</span>
+                        </div>
+                        <img class="slot-img-preview" src="" alt="معاينة الصورة 1" />
+                        <button class="slot-remove-btn" type="button" data-slot="1"
+                            aria-label="حذف الصورة الأولى">✕</button>
+                    </div>
+                    <div class="img-slot" id="slot-2" role="listitem" aria-label="موقع صورة 2">
+                        <div class="slot-placeholder" aria-hidden="true">
+                            <svg width="32" height="32" viewBox="0 0 48 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 40 L8 12 L24 6 L40 12 L40 40 Z" stroke="rgba(212,175,55,.20)"
+                                    stroke-width="1.3" fill="none" stroke-linejoin="round" />
+                                <line x1="8" y1="22" x2="40" y2="22" stroke="rgba(212,175,55,.12)"
+                                    stroke-width="1" />
+                                <line x1="8" y1="32" x2="40" y2="32" stroke="rgba(212,175,55,.12)"
+                                    stroke-width="1" />
+                                <rect x="18" y="28" width="12" height="12" rx="1" fill="rgba(212,175,55,.10)" />
+                                <rect x="10" y="24" width="7" height="7" rx="1" fill="rgba(212,175,55,.07)" />
+                                <rect x="31" y="24" width="7" height="7" rx="1" fill="rgba(212,175,55,.07)" />
+                            </svg>
+                            <span class="slot-num">٢</span>
+                        </div>
+                        <img class="slot-img-preview" src="" alt="معاينة الصورة 2" />
+                        <button class="slot-remove-btn" type="button" data-slot="2"
+                            aria-label="حذف الصورة الثانية">✕</button>
+                    </div>
+                    <div class="img-slot" id="slot-3" role="listitem" aria-label="موقع صورة 3">
+                        <div class="slot-placeholder" aria-hidden="true">
+                            <svg width="32" height="32" viewBox="0 0 48 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="6" y="8" width="36" height="32" rx="2" stroke="rgba(212,175,55,.20)"
+                                    stroke-width="1.3" fill="none" />
+                                <rect x="6" y="8" width="36" height="10" fill="rgba(212,175,55,.05)" />
+                                <line x1="22" y1="18" x2="22" y2="40" stroke="rgba(212,175,55,.12)"
+                                    stroke-width="1" />
+                                <line x1="6" y1="28" x2="42" y2="28" stroke="rgba(212,175,55,.12)"
+                                    stroke-width="1" />
+                                <rect x="8" y="20" width="12" height="7" rx="1" fill="rgba(212,175,55,.10)" />
+                                <rect x="24" y="30" width="16" height="8" rx="1" fill="rgba(212,175,55,.08)" />
+                                <circle cx="34" cy="13" r="3" stroke="rgba(212,175,55,.18)" stroke-width="1"
+                                    fill="none" />
+                            </svg>
+                            <span class="slot-num">٣</span>
+                        </div>
+                        <img class="slot-img-preview" src="" alt="معاينة الصورة 3" />
+                        <button class="slot-remove-btn" type="button" data-slot="3"
+                            aria-label="حذف الصورة الثالثة">✕</button>
+                    </div>
+                    <div class="img-slot" id="slot-4" role="listitem" aria-label="موقع صورة 4">
+                        <div class="slot-placeholder" aria-hidden="true">
+                            <svg width="32" height="32" viewBox="0 0 48 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="10" width="20" height="30" rx="1.5" stroke="rgba(212,175,55,.20)"
+                                    stroke-width="1.3" fill="none" />
+                                <rect x="26" y="16" width="18" height="24" rx="1.5" stroke="rgba(212,175,55,.18)"
+                                    stroke-width="1.2" fill="none" />
+                                <rect x="6" y="12" width="7" height="10" rx="1" fill="rgba(212,175,55,.10)" />
+                                <rect x="15" y="12" width="7" height="10" rx="1" fill="rgba(212,175,55,.07)" />
+                                <rect x="6" y="24" width="7" height="7" rx="1" fill="rgba(212,175,55,.07)" />
+                                <rect x="15" y="24" width="7" height="7" rx="1" fill="rgba(212,175,55,.10)" />
+                                <rect x="28" y="18" width="5" height="8" rx="1" fill="rgba(212,175,55,.10)" />
+                                <rect x="35" y="18" width="5" height="8" rx="1" fill="rgba(212,175,55,.07)" />
+                                <rect x="6" y="33" width="9" height="7" rx="1" fill="rgba(212,175,55,.12)" />
+                                <rect x="28" y="28" width="14" height="12" rx="1" fill="rgba(212,175,55,.08)" />
+                            </svg>
+                            <span class="slot-num">٤</span>
+                        </div>
+                        <img class="slot-img-preview" src="" alt="معاينة الصورة 4" />
+                        <button class="slot-remove-btn" type="button" data-slot="4"
+                            aria-label="حذف الصورة الرابعة">✕</button>
+                    </div>
+                    <div class="img-slot" id="slot-5" role="listitem" aria-label="موقع صورة 5">
+                        <div class="slot-placeholder" aria-hidden="true">
+                            <svg width="32" height="32" viewBox="0 0 48 48" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="6" y="6" width="16" height="20" rx="1.5" stroke="rgba(212,175,55,.18)"
+                                    stroke-width="1.2" fill="none" />
+                                <rect x="26" y="6" width="16" height="20" rx="1.5" stroke="rgba(212,175,55,.18)"
+                                    stroke-width="1.2" fill="none" />
+                                <rect x="6" y="30" width="36" height="12" rx="1.5" stroke="rgba(212,175,55,.20)"
+                                    stroke-width="1.3" fill="rgba(212,175,55,.04)" />
+                                <rect x="8" y="8" width="5" height="7" rx="1" fill="rgba(212,175,55,.10)" />
+                                <rect x="15" y="8" width="5" height="7" rx="1" fill="rgba(212,175,55,.07)" />
+                                <rect x="28" y="8" width="5" height="7" rx="1" fill="rgba(212,175,55,.10)" />
+                                <rect x="35" y="8" width="5" height="7" rx="1" fill="rgba(212,175,55,.07)" />
+                                <rect x="8" y="17" width="5" height="7" rx="1" fill="rgba(212,175,55,.07)" />
+                                <rect x="28" y="17" width="5" height="7" rx="1" fill="rgba(212,175,55,.07)" />
+                                <line x1="8" y1="34" x2="40" y2="34" stroke="rgba(212,175,55,.10)"
+                                    stroke-width=".8" />
+                                <line x1="8" y1="37" x2="30" y2="37" stroke="rgba(212,175,55,.08)"
+                                    stroke-width=".8" />
+                            </svg>
+                            <span class="slot-num">٥</span>
+                        </div>
+                        <img class="slot-img-preview" src="" alt="معاينة الصورة 5" />
+                        <button class="slot-remove-btn" type="button" data-slot="5"
+                            aria-label="حذف الصورة الخامسة">✕</button>
+                    </div>
+
+                </div><!-- /img-slots -->
+            </div>
+        </div><!-- /card 4 -->
+        <!-- ══════════════════════════════════
+            STICKY BOTTOM ACTIONS
+        ═══════════════════════════════════ -->
+        <div class="ap-actions-outer">
+            <div class="ap-actions">
+
+                <button type="submit" form="ap-main-form" class="btn-save-prop"
+                    aria-label="حفظ بيانات العقار وإرساله">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    <span class="btn-save-label">حفظ العقار</span>
+                </button>
+                <a href="#" class="btn-cancel-prop" aria-label="إلغاء وإغلاق النموذج">
+                    إلغاء
+                </a>
+
+            </div>
+        </div>
+    </form><!-- /ap-main-form -->
+
+    <!-- Side Menu (موحّد لكل صفحات الموقع) -->
+    <div id="sideMenu" class="glass nq-side-menu">
+        <div class="nq-side-menu-head">
+            <button onclick="toggleMenu()" class="nq-side-menu-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="nq-side-menu-links">
+            <a href="dashbord.html"class="nq-side-menu-link">
+                <i class="fa-solid fa-building w-6"></i>
+                <span>العقارات</span>
+            </a>
+            <a href="clientRequste.html" class="nq-side-menu-link">
+                <i class="fa-solid fa-handshake"></i>
+                <span>طلبات العملاء</span>
+            </a>
+            <a href="employee.html"
+                class="nq-side-menu-link">
+                <i class="fa-solid fa-users w-6"></i>
+                <span>الموظفون</span>
+            </a>
+            <!-- <a href="#" class="block py-3 px-4 hover:bg-white/10 rounded-2xl transition-colors flex items-center gap-4">
+                                <i class="fa-solid fa-chart-pie w-6"></i>
+                                <span>التقارير</span>
+                            </a> -->
+        </div>
+    </div>
+<!-- =====================================================
+        FOOTER
+    ====================================================== -->
+<footer id="footer" role="contentinfo">
+    <p class="footer-copy">
+        جميع الحقوق محفوظة © <b>شركة النقيب للعقارات</b> &nbsp;2026
+    </p>
+    <div class="social-row" role="list" aria-label="روابط التواصل الاجتماعي">
+        <a href="#" class="social-btn" role="listitem" aria-label="واتساب" title="واتساب">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+            </svg>
+        </a>
+        <a href="#" class="social-btn" role="listitem" aria-label="فيسبوك" title="فيسبوك">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+        </a>
+        <a href="#" class="social-btn" role="listitem" aria-label="إنستغرام" title="إنستغرام">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+        </a>
+    </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<!-- js file -->
+<script src="JS/nav.js"></script>
+<script src="JS/addRealstate.js"></script>
+</body>
+
+</html>

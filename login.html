@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>النقيب للعقارات — تسجيل الدخول</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <!-- link css -->
+  <link rel="stylesheet" href="CSS/login.css">
+  <link rel="stylesheet" href="CSS/nav.css">
+  <link rel="stylesheet" href="CSS/footer.css">
+  <!-- icon -->
+  <link rel="manifest" href="JS/manifest.json">
+  <meta name="theme-color" content="#D4AF37">
+</head>
+
+<body data-theme="dark">
+  <div id="install-popup">
+    <div class="install-popup-content">
+      <div class="install-icon">
+        📱
+      </div>
+      <h3>ثبت التطبيق</h3>
+      <p>
+        أضف النقيب للعقارات إلى الشاشة الرئيسية للوصول السريع في أي وقت.
+      </p>
+      <div class="install-actions">
+        <button id="installBtn" class="install-btn">
+          تثبيت الآن
+        </button>
+
+        <button id="closeBtn" class="close-btn">
+          لاحقاً
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- =====================================================
+    LOADING SCREEN
+====================================================== -->
+  <div id="loader" role="status" aria-label="جارٍ التحميل…">
+    <div class="loader-ring-wrap">
+      <!-- Spinning rings -->
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+
+      <!-- Orbiting particles (8 evenly spaced) -->
+      <div class="orbit-particle" style="--oa:0deg;   --os:3.2s; --od:0s;"></div>
+      <div class="orbit-particle" style="--oa:45deg;  --os:3.2s; --od:-.4s;"></div>
+      <div class="orbit-particle" style="--oa:90deg;  --os:3.2s; --od:-.8s;"></div>
+      <div class="orbit-particle" style="--oa:135deg; --os:3.2s; --od:-1.2s;"></div>
+      <div class="orbit-particle" style="--oa:180deg; --os:3.2s; --od:-1.6s;"></div>
+      <div class="orbit-particle" style="--oa:225deg; --os:3.2s; --od:-2.0s;"></div>
+      <div class="orbit-particle" style="--oa:270deg; --os:3.2s; --od:-2.4s;"></div>
+      <div class="orbit-particle" style="--oa:315deg; --os:3.2s; --od:-2.8s;"></div>
+
+      <!-- Center logo mark -->
+      <div class="loader-logo-mark">
+        <img src="IMG/logo.png" alt="شعار النقيب للعقارات" class="loader-logo">
+      </div>
+    </div>
+
+    <div class="loader-brand">
+      <div class="loader-brand-ar">النقيب للعقارات</div>
+      <div class="loader-brand-en">Al Naqeeb Real Estate</div>
+      <div class="loader-tagline">نظام إدارة العقارات المتكامل</div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+     BACKGROUND
+====================================================== -->
+  <div id="bg-wrap" aria-hidden="true">
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+    <div class="bg-orb"></div>
+
+    <!-- Floating glass bubbles -->
+    <div class="glass-bubble" style="width:90px;height:90px;top:18%;right:7%;--dur:8s;--delay:0s;"></div>
+    <div class="glass-bubble" style="width:56px;height:56px;top:58%;right:14%;--dur:11s;--delay:-3s;"></div>
+    <div class="glass-bubble" style="width:70px;height:70px;top:30%;left:6%;--dur:9.5s;--delay:-6s;"></div>
+    <div class="glass-bubble" style="width:40px;height:40px;top:70%;left:10%;--dur:7s;--delay:-1.5s;"></div>
+    <div class="glass-bubble" style="width:110px;height:110px;bottom:14%;right:4%;--dur:13s;--delay:-4s;opacity:.35;">
+    </div>
+
+    <!-- City silhouette SVG -->
+    <svg id="city-svg" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="city-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--building-fill)" stop-opacity="1" />
+          <stop offset="100%" stop-color="var(--building-fill)" stop-opacity=".3" />
+        </linearGradient>
+      </defs>
+      <!-- Buildings (hand-crafted city-scape) -->
+      <g fill="url(#city-grad)">
+        <!-- Far background (lighter) -->
+        <rect x="0" y="200" width="55" height="120" opacity=".45" />
+        <rect x="58" y="180" width="35" height="140" opacity=".45" />
+        <rect x="96" y="210" width="45" height="110" opacity=".45" />
+        <rect x="144" y="160" width="30" height="160" opacity=".45" />
+        <rect x="177" y="195" width="50" height="125" opacity=".45" />
+        <rect x="260" y="140" width="40" height="180" opacity=".45" />
+        <rect x="303" y="175" width="60" height="145" opacity=".45" />
+        <rect x="366" y="155" width="28" height="165" opacity=".45" />
+        <rect x="397" y="130" width="50" height="190" opacity=".45" />
+        <rect x="460" y="180" width="38" height="140" opacity=".45" />
+        <rect x="780" y="150" width="45" height="170" opacity=".45" />
+        <rect x="828" y="175" width="30" height="145" opacity=".45" />
+        <rect x="900" y="135" width="55" height="185" opacity=".45" />
+        <rect x="1000" y="160" width="40" height="160" opacity=".45" />
+        <rect x="1060" y="185" width="60" height="135" opacity=".45" />
+        <rect x="1200" y="145" width="35" height="175" opacity=".45" />
+        <rect x="1260" y="175" width="55" height="145" opacity=".45" />
+        <rect x="1340" y="155" width="45" height="165" opacity=".45" />
+        <rect x="1395" y="185" width="45" height="135" opacity=".45" />
+
+        <!-- Midground -->
+        <rect x="20" y="220" width="70" height="100" />
+        <rect x="100" y="195" width="50" height="125" />
+        <rect x="160" y="170" width="80" height="150" />
+        <!-- Skyscraper with antenna -->
+        <rect x="250" y="110" width="55" height="210" />
+        <rect x="270" y="90" width="15" height="22" />
+        <rect x="276" y="80" width="3" height="14" />
+        <rect x="500" y="185" width="65" height="135" />
+        <rect x="575" y="145" width="45" height="175" />
+        <rect x="630" y="105" width="70" height="215" />
+        <!-- Tall central tower -->
+        <rect x="700" y="60" width="60" height="260" />
+        <polygon points="730,40 750,60 710,60" />
+        <rect x="760" y="125" width="50" height="195" />
+        <rect x="820" y="165" width="40" height="155" />
+        <rect x="920" y="110" width="65" height="210" />
+        <rect x="1010" y="90" width="55" height="230" />
+        <polygon points="1037,72 1053,90 1021,90" />
+        <rect x="1080" y="145" width="70" height="175" />
+        <rect x="1160" y="105" width="50" height="215" />
+        <rect x="1225" y="140" width="85" height="180" />
+        <rect x="1320" y="120" width="60" height="200" />
+        <rect x="1390" y="170" width="50" height="150" />
+      </g>
+
+      <!-- Windows (golden lit) -->
+      <g fill="var(--building-win)">
+        <!-- Central tower windows -->
+        <rect x="706" y="70" width="8" height="12" rx="1" />
+        <rect x="716" y="70" width="8" height="12" rx="1" />
+        <rect x="726" y="70" width="8" height="12" rx="1" />
+        <rect x="706" y="90" width="8" height="12" rx="1" />
+        <rect x="716" y="90" width="8" height="12" rx="1" />
+        <rect x="726" y="90" width="8" height="12" rx="1" />
+        <rect x="736" y="90" width="8" height="12" rx="1" />
+        <rect x="746" y="90" width="8" height="12" rx="1" />
+
+        <!-- Left skyscraper windows -->
+        <rect x="256" y="120" width="7" height="11" rx="1" />
+        <rect x="267" y="120" width="7" height="11" rx="1" />
+        <rect x="280" y="120" width="7" height="11" rx="1" />
+        <rect x="256" y="138" width="7" height="11" rx="1" />
+        <rect x="267" y="138" width="7" height="11" rx="1" />
+        <rect x="280" y="138" width="7" height="11" rx="1" />
+        <rect x="291" y="138" width="7" height="11" rx="1" />
+
+        <!-- Right tower windows -->
+        <rect x="1016" y="100" width="7" height="11" rx="1" />
+        <rect x="1027" y="100" width="7" height="11" rx="1" />
+        <rect x="1038" y="100" width="7" height="11" rx="1" />
+        <rect x="1049" y="100" width="7" height="11" rx="1" />
+        <rect x="1016" y="118" width="7" height="11" rx="1" />
+        <rect x="1027" y="118" width="7" height="11" rx="1" />
+        <rect x="1038" y="118" width="7" height="11" rx="1" />
+        <rect x="1049" y="118" width="7" height="11" rx="1" />
+      </g>
+
+      <!-- Ground gradient strip -->
+      <rect x="0" y="318" width="1440" height="2" fill="url(#city-grad)" opacity=".4" />
+    </svg>
+  </div>
+
+  <!-- =====================================================
+    NAVBAR
+====================================================== -->
+  <header id="navbar" role="banner">
+    <a class="nav-brand" href="#" aria-label="الصفحة الرئيسية — النقيب للعقارات">
+      <!-- Logo mark -->
+      <img src="IMG/logo.png" alt="شعار النقيب للعقارات" class="nav-logo">
+      <div class="nav-brand-text">
+        <span class="nav-name-ar">النقيب للعقارات</span>
+        <span class="nav-name-en">Al Naqeeb Real Estate</span>
+      </div>
+    </a>
+
+    <!-- Theme toggle -->
+    <button class="theme-btn" id="themeToggle" aria-label="تبديل الوضع المظلم / الفاتح" type="button">
+      <!-- Moon (dark mode icon) -->
+      <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="#D4AF37" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" fill="rgba(212,175,55,.10)" />
+        <!-- Stars -->
+        <circle cx="18.5" cy="3.5" r="1" fill="#D4AF37" opacity=".7" />
+        <circle cx="21" cy="7" r=".7" fill="#D4AF37" opacity=".5" />
+        <circle cx="16" cy="2" r=".5" fill="#D4AF37" opacity=".6" />
+      </svg>
+      <!-- Sun (light mode icon) -->
+      <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true">
+        <circle cx="12" cy="12" r="5" stroke="#D4AF37" stroke-width="1.8" fill="rgba(212,175,55,.15)" />
+        <g stroke="#D4AF37" stroke-width="1.6" stroke-linecap="round">
+          <line x1="12" y1="2" x2="12" y2="4.5" />
+          <line x1="12" y1="19.5" x2="12" y2="22" />
+          <line x1="2" y1="12" x2="4.5" y2="12" />
+          <line x1="19.5" y1="12" x2="22" y2="12" />
+          <line x1="4.93" y1="4.93" x2="6.76" y2="6.76" />
+          <line x1="17.24" y1="17.24" x2="19.07" y2="19.07" />
+          <line x1="4.93" y1="19.07" x2="6.76" y2="17.24" />
+          <line x1="17.24" y1="6.76" x2="19.07" y2="4.93" />
+        </g>
+      </svg>
+    </button>
+  </header>
+
+  <!-- =====================================================
+    MAIN — LOGIN CARD
+====================================================== -->
+  <main id="page">
+    <div class="login-card" role="main">
+      <div class="card-corner" aria-hidden="true"></div>
+      <div class="card-corner-br" aria-hidden="true"></div>
+      <div class="card-shine" aria-hidden="true"></div>
+
+      <!-- Header -->
+      <div class="card-header">
+        <div class="card-emblem">
+          <img src="IMG/logo.png" alt="شعار النقيب للعقارات" class="card-logo">
+        </div>
+
+        <div class="card-divider-top" aria-hidden="true"></div>
+
+        <h1 class="card-title">تسجيل الدخول</h1>
+        <p class="card-subtitle">مرحبًا بك في نظام النقيب للعقارات</p>
+      </div>
+
+      <!-- Form -->
+      <form id="login-form" novalidate autocomplete="on">
+        <div class="form-fields">
+
+          <!-- Phone -->
+          <div class="field-group">
+            <label class="field-label" for="phone">رقم التليفون</label>
+            <div class="field-wrap">
+              <input class="field-input" type="tel" id="phone" name="phone" placeholder="01XXXXXXXXX" autocomplete="tel"
+                inputmode="numeric" maxlength="11" required />
+              <div class="error-message" id="phoneError"></div>
+            </div>
+          </div>
+          <!-- Password -->
+          <div class="field-group">
+            <label class="field-label" for="password">كلمة المرور</label>
+            <div class="field-wrap">
+              <input class="field-input has-toggle" type="password" id="password" name="password"
+                placeholder="أدخل كلمة المرور" autocomplete="current-password" required aria-required="true" />
+              <div class="error-message" id="passwordError"></div>
+              <button type="button" class="eye-toggle" id="eyeToggle" aria-label="إظهار كلمة المرور"
+                aria-controls="password">
+                <!-- Eye open -->
+                <svg class="eye-icon" id="eyeOpen" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" />
+                </svg>
+                <!-- Eye closed -->
+                <svg class="eye-icon eye-icon-off" id="eyeClosed" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extras row -->
+        <div class="form-extras">
+          <label class="checkbox-label" style="direction: ltr;">
+            <input type="checkbox" name="remember" id="remember" />
+            <span class="checkbox-text">تذكّرني</span>
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-primary" id="loginBtn">
+          <span class="btn-label">تسجيل الدخول</span>
+        </button>
+      </form>
+
+      <p class="card-foot-note">
+        <span>بوابة الدخول</span>
+      </p>
+    </div>
+  </main>
+
+  <!-- =====================================================
+    FOOTER
+====================================================== -->
+  <footer id="footer" role="contentinfo">
+    <p class="footer-copy">
+      جميع الحقوق محفوظة © <b>شركة النقيب للعقارات</b> &nbsp;2026
+    </p>
+
+    <div class="social-row" role="list" aria-label="روابط التواصل الاجتماعي">
+      <!-- WhatsApp -->
+      <a href="#" class="social-btn" role="listitem" aria-label="واتساب" title="واتساب">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+        </svg>
+      </a>
+
+      <!-- Facebook -->
+      <a href="#" class="social-btn" role="listitem" aria-label="فيسبوك" title="فيسبوك">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      </a>
+
+      <!-- Instagram -->
+      <a href="#" class="social-btn" role="listitem" aria-label="إنستغرام" title="إنستغرام">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true">
+          <path
+            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+        </svg>
+      </a>
+    </div>
+  </footer>
+  <script src="JS/login.js"></script>
+  <script src="JS/nav.js"></script>
+</body>
+
+</html>
