@@ -1,0 +1,337 @@
+/* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+:root {
+    /* Gold scale */
+    --gold-100: #fdf6d8;
+    --gold-300: #f0d060;
+    --gold-500: #D4AF37;
+    --gold-700: #a87d14;
+    --gold-900: #5a3e05;
+
+    /* Glass */
+    --glass-bg-dark: rgba(10, 8, 4, 0.55);
+    --glass-bg-light: rgba(255, 252, 240, 0.55);
+    --glass-border-dark: rgba(212, 175, 55, 0.22);
+    --glass-border-light: rgba(212, 175, 55, 0.45);
+    --glass-highlight: rgba(255, 255, 255, 0.06);
+
+    /* Surfaces (dark default) */
+    --bg-canvas: #0a0804;
+    --bg-mid: #0f0d07;
+    --surface-1: rgba(18, 14, 6, 0.72);
+    --surface-2: rgba(28, 22, 8, 0.60);
+    --border-col: rgba(212, 175, 55, 0.22);
+    --text-primary: #f5f0e0;
+    --text-muted: rgba(245, 240, 224, 0.50);
+    --text-faint: rgba(245, 240, 224, 0.28);
+    --input-bg: rgba(255, 255, 255, 0.04);
+    --input-focus: rgba(212, 175, 55, 0.10);
+    --shadow-glow: rgba(212, 175, 55, 0.18);
+    --orb-a: rgba(212, 175, 55, 0.12);
+    --orb-b: rgba(212, 175, 55, 0.06);
+    --particle-col: rgba(212, 175, 55, 0.70);
+    --building-fill: #1a1408;
+    --building-win: rgba(212, 175, 55, 0.14);
+
+    /* Spacing & radius */
+    --r-sm: 10px;
+    --r-md: 16px;
+    --r-lg: 24px;
+    --r-xl: 32px;
+
+    /* Transitions */
+    --t-fast: 0.18s cubic-bezier(.4, 0, .2, 1);
+    --t-med: 0.34s cubic-bezier(.4, 0, .2, 1);
+    --t-slow: 0.60s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+    --bg-canvas: #f5edd4;
+    --bg-mid: #ede2c0;
+    --surface-1: rgba(255, 252, 240, 0.72);
+    --surface-2: rgba(255, 250, 235, 0.60);
+    --border-col: rgba(212, 175, 55, 0.40);
+    --text-primary: #1a1200;
+    --text-muted: rgba(26, 18, 0, 0.55);
+    --text-faint: rgba(26, 18, 0, 0.32);
+    --input-bg: rgba(255, 255, 255, 0.55);
+    --input-focus: rgba(212, 175, 55, 0.14);
+    --shadow-glow: rgba(212, 175, 55, 0.30);
+    --orb-a: rgba(212, 175, 55, 0.20);
+    --orb-b: rgba(212, 175, 55, 0.10);
+    --particle-col: rgba(160, 120, 10, 0.55);
+    --building-fill: #e8d89a;
+    --building-win: rgba(180, 140, 20, 0.20);
+}
+/* ============================================================
+       NAVBAR
+    ============================================================ */
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(16px, 4vw, 40px);
+    background: var(--surface-1);
+    backdrop-filter: blur(28px) saturate(1.6);
+    -webkit-backdrop-filter: blur(28px) saturate(1.6);
+    border-bottom: 1px solid var(--border-col);
+    box-shadow:
+        0 1px 0 var(--glass-highlight),
+        0 4px 40px rgba(0, 0, 0, .45);
+    transition: background var(--t-slow), border-color var(--t-slow), box-shadow var(--t-slow);
+}
+
+/* Left reflection line */
+#navbar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, .35), transparent);
+    pointer-events: none;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.nav-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    flex-shrink: 0;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, .4));
+}
+
+.nav-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.nav-name-ar {
+    font-size: 1.05rem;
+    font-weight: 800;
+    background: linear-gradient(120deg, var(--gold-300) 0%, var(--gold-500) 55%, var(--gold-700) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-name-en {
+    font-size: .58rem;
+    font-weight: 400;
+    letter-spacing: .18em;
+    color: rgba(212, 175, 55, .40);
+    text-transform: uppercase;
+    margin-top: 3px;
+}
+
+/* Theme toggle */
+.theme-btn {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--border-col);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: border-color var(--t-med), box-shadow var(--t-med), background var(--t-slow);
+    flex-shrink: 0;
+}
+
+.theme-btn:hover {
+    border-color: var(--gold-500);
+    box-shadow: 0 0 18px rgba(212, 175, 55, .35);
+}
+
+.theme-icon {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    transition: opacity var(--t-med), transform var(--t-med);
+}
+
+.icon-moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.icon-sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(.7);
+}
+
+[data-theme="light"] .icon-moon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(.7);
+}
+
+[data-theme="light"] .icon-sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+/* ============================================================
+       PAGE LAYOUT
+    ============================================================ */
+#page {
+    position: relative;
+    z-index: 10;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: 100px 16px 90px;
+}
+/* ---------- Side Menu (offcanvas) ---------- */
+/* navbar menu */
+#sideMenu {
+    transition: .5s ease;
+}
+
+.nq-side-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 20rem;
+    max-width: 85vw;
+    padding: 5rem 1.5rem 1.5rem;
+    border-left: 1px solid var(--border-col);
+    transform: translateX(100%);
+    transition: transform var(--t-slow);
+    z-index: 250;
+    overflow-y: auto;
+}
+
+.nq-side-menu.is-open {
+    transform: translateX(0);
+}
+
+.nq-side-menu-head {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.nq-side-menu-close {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    line-height: 1;
+    padding: .25rem;
+}
+
+.nq-side-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 1.125rem;
+}
+
+.nq-side-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem 1rem;
+    border-radius: 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: background var(--t-fast), color var(--t-fast);
+}
+
+.nq-side-menu-link:hover {
+    background: var(--surface-2);
+    color: var(--gold-500);
+}
+
+.nq-side-menu-link i {
+    width: 1.5rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.nq-side-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--t-med), visibility var(--t-med);
+    z-index: 240;
+}
+
+.nq-side-menu-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nq-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+@media (min-width: 768px) {
+    .nq-nav-actions {
+        gap: 1.25rem;
+    }
+}
+
+/* ---------- زرار الهامبرجر ---------- */
+.nq-hamburger-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--gold-500);
+    background: transparent;
+    border: none;
+    padding: 0;
+    transition: color var(--t-fast);
+}
+
+.nq-hamburger-btn:hover {
+    color: var(--gold-500);
+}
+/* Side Menu */
+#sideMenu {
+    background: var(--surface-1);
+    border-left: 1px solid var(--border-col);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+}
+
+#sideMenu a {
+    color: var(--text-primary);
+    transition: all var(--t-fast);
+}
+
+#sideMenu a:hover {
+    background: var(--surface-2);
+    color: var(--gold-500);
+}

@@ -1,0 +1,836 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+/* ---------- Status accent colors (theme-aware) ---------- */
+:root {
+    --status-ok: #3F9D5D;
+    --status-ok-bg: rgba(63, 157, 93, .12);
+    --status-warn: #D49A37;
+    --status-warn-bg: rgba(212, 154, 55, .14);
+    --status-mute: rgba(245, 240, 224, .45);
+    --status-mute-bg: rgba(245, 240, 224, .08);
+}
+
+[data-theme="light"] {
+    --status-ok: #2F7D49;
+    --status-ok-bg: rgba(47, 125, 73, .12);
+    --status-warn: #9C6A1E;
+    --status-warn-bg: rgba(156, 106, 30, .14);
+    --status-mute: rgba(26, 18, 0, .45);
+    --status-mute-bg: rgba(26, 18, 0, .07);
+}
+
+body.nq-listing-body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-canvas);
+    color: var(--text-primary);
+    transition: background var(--t-slow), color var(--t-slow);
+}
+
+/* ============ MAIN WRAP ============ */
+.nq-main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 90px 16px 110px;
+}
+
+/* ============ PAGE TITLE (glass) ============ */
+.nq-title-card {
+    text-align: center;
+    height: 100px;
+}
+
+.nq-title-card h1 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin-top: 30px;
+    background: linear-gradient(120deg, var(--gold-300) 0%, var(--gold-500) 55%, var(--gold-700) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============ SEARCH ============ */
+.nq-search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 16px;
+}
+
+.nq-search-box i {
+    color: var(--gold-500);
+    opacity: .8;
+    flex-shrink: 0;
+}
+
+.nq-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 12px 4px;
+    font-size: .92rem;
+    color: var(--text-primary);
+    font-family: inherit;
+}
+
+.nq-search-input::placeholder {
+    color: var(--text-faint);
+}
+
+/* ============ STATS STRIP (signature element) ============ */
+.nq-stats-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.nq-stat-chip {
+    text-align: center;
+    padding: 14px 10px;
+    border-radius: var(--r-md);
+}
+
+.nq-stat-num {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.nq-stat-label {
+    display: block;
+    font-size: .68rem;
+    margin-top: 3px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.nq-stat-chip.is-available .nq-stat-num {
+    color: var(--status-ok);
+}
+
+.nq-stat-chip.is-reserved .nq-stat-num {
+    color: var(--status-warn);
+}
+
+.nq-stat-chip.is-sold .nq-stat-num {
+    color: var(--status-mute);
+}
+
+/* ============ TOOLBAR ============ */
+.nq-toolbar-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-col);
+    border-radius: var(--r-md);
+    padding: 10px 16px;
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    transition: border-color var(--t-fast), background var(--t-slow);
+}
+
+.nq-toolbar-toggle:hover {
+    border-color: var(--gold-500);
+}
+
+.nq-toolbar-toggle i.fa-filter {
+    color: var(--gold-500);
+}
+
+.nq-toolbar-toggle .nq-chevron {
+    transition: transform .2s ease;
+    color: var(--text-muted);
+    margin-right: 2px;
+    font-size: .7rem;
+}
+
+.nq-toolbar-toggle[aria-expanded="true"] .nq-chevron {
+    transform: rotate(180deg);
+}
+
+.nq-filter-badge {
+    background: var(--gold-500);
+    color: #1a1200;
+    font-size: .62rem;
+    font-weight: 800;
+    border-radius: 999px;
+    min-width: 19px;
+    height: 19px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+}
+
+.nq-filter-badge[data-zero="true"] {
+    background: var(--surface-2);
+    color: var(--text-muted);
+}
+
+.nq-sort-select,
+.nq-filter-select {
+    background: var(--input-bg);
+    border: 1px solid var(--border-col);
+    border-radius: var(--r-sm);
+    color: var(--text-primary);
+    font-size: .8rem;
+    font-weight: 600;
+    padding: 9px 12px;
+    font-family: inherit;
+    transition: border-color var(--t-fast);
+}
+
+.nq-sort-select:focus,
+.nq-filter-select:focus {
+    outline: none;
+    border-color: var(--gold-500);
+    box-shadow: 0 0 0 3px var(--input-focus);
+}
+
+.nq-sort-select option,
+.nq-filter-select option {
+    background: var(--bg-mid);
+    color: var(--text-primary);
+}
+
+.nq-sort-wrap {
+    max-width: 175px;
+    flex-shrink: 0;
+}
+
+.nq-filters-card {
+    margin-top: 6px;
+    padding: 18px 16px;
+}
+
+.nq-filter-label {
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+    display: block;
+}
+
+.nq-filter-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.nq-btn-apply {
+    flex: 1;
+    background: linear-gradient(120deg, var(--gold-300), var(--gold-500));
+    color: #1a1200;
+    border: none;
+    border-radius: var(--r-sm);
+    padding: 11px 16px;
+    font-weight: 800;
+    font-size: .82rem;
+    font-family: inherit;
+    transition: filter var(--t-fast);
+}
+
+.nq-btn-apply:hover {
+    filter: brightness(1.08);
+}
+
+.nq-btn-reset {
+    background: var(--surface-2);
+    color: var(--text-primary);
+    border: 1px solid var(--border-col);
+    border-radius: var(--r-sm);
+    padding: 11px 16px;
+    font-weight: 700;
+    font-size: .82rem;
+    font-family: inherit;
+    transition: border-color var(--t-fast);
+}
+
+.nq-btn-reset:hover {
+    border-color: var(--gold-500);
+    color: var(--gold-500);
+}
+
+/* ============ RESULTS LINE ============ */
+.nq-results-line {
+    font-size: .78rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 14px 4px 10px;
+}
+
+.nq-results-line #resultsCount {
+    color: var(--gold-500);
+    font-weight: 800;
+}
+
+/* ============ PROPERTY GRID / CARD ============ */
+.nq-prop-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.nq-card {
+    display: flex;
+    overflow: hidden;
+    transition: transform var(--t-med), border-color var(--t-med), box-shadow var(--t-med);
+}
+
+.nq-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-500);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .25), 0 0 24px var(--shadow-glow);
+}
+
+.nq-card-rail {
+    width: 5px;
+    flex-shrink: 0;
+}
+
+.nq-rail-available {
+    background: var(--status-ok);
+}
+
+.nq-rail-reserved {
+    background: var(--status-warn);
+}
+
+.nq-rail-sold {
+    background: var(--status-mute);
+}
+
+.nq-card-body {
+    flex: 1;
+    padding: 16px 18px;
+    min-width: 0;
+}
+
+.nq-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.nq-status-pill {
+    display: inline-block;
+    font-size: .65rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 7px;
+}
+
+.nq-pill-available {
+    background: var(--status-ok-bg);
+    color: var(--status-ok);
+}
+
+.nq-pill-reserved {
+    background: var(--status-warn-bg);
+    color: var(--status-warn);
+}
+
+.nq-pill-sold {
+    background: var(--status-mute-bg);
+    color: var(--status-mute);
+}
+
+.nq-card-title {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: .98rem;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+    line-height: 1.3;
+}
+
+.nq-card-loc {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .74rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.nq-card-loc i {
+    color: var(--gold-500);
+    font-size: .68rem;
+}
+
+.nq-card-price {
+    text-align: left;
+    flex-shrink: 0;
+}
+
+.nq-price-num {
+    display: block;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 1.02rem;
+    color: var(--gold-500);
+    white-space: nowrap;
+}
+
+.nq-price-unit {
+    display: block;
+    font-size: .65rem;
+    color: var(--text-faint);
+    text-align: left;
+}
+
+.nq-card-specs {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 10px 0;
+    font-size: .76rem;
+    color: var(--text-muted);
+}
+
+.nq-spec strong {
+    color: var(--text-primary);
+    font-weight: 800;
+}
+
+.nq-spec-sep {
+    color: var(--border-col);
+}
+
+.nq-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px dashed var(--border-col);
+    padding-top: 11px;
+    gap: 8px;
+}
+
+.nq-employee {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+}
+
+.nq-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--border-col);
+    color: var(--gold-500);
+    font-size: .68rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nq-emp-label {
+    font-size: .62rem;
+    color: var(--text-faint);
+}
+
+.nq-emp-name {
+    font-size: .76rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.nq-rank-tag {
+    font-size: .66rem;
+    font-weight: 800;
+    color: var(--gold-500);
+    background: var(--surface-2);
+    border: 1px solid var(--border-col);
+    border-radius: var(--r-sm);
+    padding: 4px 9px;
+    flex-shrink: 0;
+}
+
+/* ============ EMPTY STATE ============ */
+.nq-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.nq-empty-state i {
+    font-size: 2.6rem;
+    color: var(--border-col);
+    margin-bottom: 16px;
+    display: block;
+}
+
+.nq-empty-title {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+}
+
+.nq-empty-sub {
+    font-size: .8rem;
+    margin-bottom: 20px;
+}
+
+.nq-empty-state .nq-btn-apply {
+    flex: none;
+    display: inline-block;
+    padding: 11px 26px;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 380px) {
+    .nq-emp-name {
+        max-width: 100px;
+    }
+
+    .nq-sort-wrap {
+        max-width: 135px;
+    }
+
+    .nq-sort-select {
+        font-size: .72rem;
+        padding: 9px 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .nq-card,
+    .nq-toolbar-toggle,
+    .nq-btn-apply,
+    .nq-btn-reset {
+        transition: none !important;
+    }
+}
+
+/* img */
+.nq-property-image {
+    width: 100%;
+    height: 250px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.property-preview {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform .3s ease;
+}
+
+.property-preview:hover {
+    transform: scale(1.03);
+}
+
+/* =========================
+   Remove Tailwind dependency
+========================= */
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.pb-14 {
+    padding-bottom: 3.5rem;
+}
+
+
+/* flex */
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+
+/* gap */
+.gap-3 {
+    gap: .75rem;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+
+/* fixed button */
+.fixed {
+    position: fixed;
+}
+
+.bottom-28 {
+    bottom: 7rem;
+}
+
+.left-1\/2 {
+    left: 50%;
+}
+
+.-translate-x-1\/2 {
+    transform: translateX(-50%);
+}
+
+
+/* z-index */
+.z-50 {
+    z-index: 50;
+}
+
+/* width height */
+.w-16 {
+    width: 4rem;
+}
+
+.h-16 {
+    height: 4rem;
+}
+
+
+/* rounded */
+.rounded-3xl {
+    border-radius: 1.5rem;
+}
+
+
+/* button */
+button {
+    cursor: pointer;
+}
+
+
+/* navbar menu */
+#sideMenu {
+    transition: .5s ease;
+}
+
+
+/* prevent Tailwind/Bootstrap conflict on the toggle button only —
+   لا تلمس .collapse نفسها، Bootstrap بيتحكم في display/height بنفسه
+   عبر inline styles + transition؛ أي override هنا بيكسر الحركة ويسبب
+   فلاش ظهور/اختفاء فوري. */
+.nq-toolbar-toggle {
+    display: flex !important;
+}
+
+/* ============================================================
+   استبدال Tailwind utility classes — بدون تحميل سكريبت خارجي
+   العناصر المستهدفة: حاوية النافبار اليمنى (theme + hamburger)،
+   زرار الهامبرجر، زرار الإضافة العائم (FAB)، الـ Bottom Nav.
+============================================================ */
+
+/* ---------- حاوية أزرار النافبار اليمنى (theme toggle + hamburger) ---------- */
+.nq-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+@media (min-width: 768px) {
+    .nq-nav-actions {
+        gap: 1.25rem;
+    }
+}
+
+/* ---------- زرار الهامبرجر ---------- */
+.nq-hamburger-btn {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--gold-500);
+    background: transparent;
+    border: none;
+    padding: 0;
+    transition: color var(--t-fast);
+}
+
+.nq-hamburger-btn:hover {
+    color: var(--gold-500);
+}
+
+/* ---------- زرار الإضافة العائم (FAB) ---------- */
+.nq-fab {
+    position: fixed;
+    bottom: 7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(to bottom right, var(--gold-500), #b45309);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.25rem;
+    line-height: 1;
+    color: #000;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, .55);
+    border: 1px solid rgba(255, 255, 255, .30);
+    z-index: 50;
+}
+
+/* float/pulse animation موروثة من .fab — تشتغل مع .nq-fab بنفس الـ keyframes
+   لأن float بيحتاج translateX(-50%) في الـ base وهو متوفر فوق */
+
+/* ---------- Bottom Nav ---------- */
+.nq-bottom-nav {
+    border-top: 1px solid var(--border-col);
+    margin-bottom: 0;
+}
+
+.nq-bottom-nav-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    text-align: center;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+
+.nq-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    color: var(--gold-500);
+    text-decoration: none;
+    transition: color var(--t-fast);
+}
+
+.nq-nav-link:hover {
+    color: var(--text-primary);
+}
+
+.nq-nav-icon {
+    font-size: 1.5rem;
+    margin-bottom: .25rem;
+    color: var(--gold-500);
+}
+
+.nq-nav-label {
+    font-size: .75rem;
+    font-weight: 500;
+    color: var(--gold-500);
+}
+
+/* ---------- Side Menu (offcanvas) ---------- */
+.nq-side-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 20rem;
+    max-width: 85vw;
+    padding: 5rem 1.5rem 1.5rem;
+    border-left: 1px solid var(--border-col);
+    transform: translateX(100%);
+    transition: transform var(--t-slow);
+    z-index: 250;
+    overflow-y: auto;
+}
+
+.nq-side-menu.is-open {
+    transform: translateX(0);
+}
+
+.nq-side-menu-head {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.nq-side-menu-close {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    line-height: 1;
+    padding: .25rem;
+}
+
+.nq-side-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 1.125rem;
+}
+
+.nq-side-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem 1rem;
+    border-radius: 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: background var(--t-fast), color var(--t-fast);
+}
+
+.nq-side-menu-link:hover {
+    background: var(--surface-2);
+    color: var(--gold-500);
+}
+
+.nq-side-menu-link i {
+    width: 1.5rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.nq-side-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--t-med), visibility var(--t-med);
+    z-index: 240;
+}
+
+.nq-side-menu-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}

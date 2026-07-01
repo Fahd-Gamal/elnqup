@@ -1,0 +1,107 @@
+/* ============================================================
+    FOOTER
+============================================================ */
+#footer {
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+z-index: 200;
+height: 60px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 clamp(16px, 4vw, 40px);
+background: var(--surface-1);
+backdrop-filter: blur(24px) saturate(1.4);
+-webkit-backdrop-filter: blur(24px) saturate(1.4);
+border-top: 1px solid var(--border-col);
+box-shadow: 0 -1px 0 var(--glass-highlight);
+transition: background var(--t-slow), border-color var(--t-slow);
+}
+
+#footer::before {
+content: '';
+position: absolute;
+top: 0;
+right: 0;
+width: 30%;
+height: 1px;
+background: linear-gradient(90deg, transparent, rgba(212, 175, 55, .28), transparent);
+pointer-events: none;
+}
+
+.footer-copy {
+font-size: clamp(.65rem, 1.8vw, .78rem);
+font-weight: 400;
+color: var(--text-muted);
+white-space: nowrap;
+}
+
+.footer-copy b {
+font-weight: 700;
+color: var(--gold-500);
+}
+
+.social-row {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.social-btn {
+width: 36px;
+height: 36px;
+border-radius: 50%;
+background: var(--surface-2);
+border: 1px solid var(--border-col);
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+text-decoration: none;
+color: var(--text-muted);
+transition:
+    color var(--t-fast),
+    border-color var(--t-fast),
+    box-shadow var(--t-fast),
+    transform var(--t-fast),
+    background var(--t-slow);
+}
+
+.social-btn:hover {
+color: var(--gold-500);
+border-color: var(--gold-500);
+box-shadow: 0 0 14px rgba(212, 175, 55, .30);
+transform: translateY(-3px) scale(1.08);
+}
+
+/* ============================================================
+    ANIMATIONS — reduced-motion respect
+============================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+*,
+*::before,
+*::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+}
+}
+
+/* ============================================================
+    RESPONSIVE
+============================================================ */
+@media (max-width: 480px) {
+.footer-copy {
+    display: none;
+}
+
+#footer {
+    justify-content: center;
+}
+
+.login-card {
+    border-radius: var(--r-lg);
+}
+}

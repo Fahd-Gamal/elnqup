@@ -1,0 +1,814 @@
+.nq-view-root {
+    /* Gold scale */
+    --nq-gold-50: #fdf8e7;
+    --nq-gold-200: #f0d878;
+    --nq-gold-400: #D4AF37;
+    --nq-gold-600: #a8860f;
+    --nq-gold-800: #5c4a06;
+
+    /* Neutrals */
+    --nq-black: #0F0F0F;
+    --nq-white: #FFFFFF;
+    --nq-ink: rgba(255, 255, 255, 0.90);
+    --nq-ink-muted: rgba(255, 255, 255, 0.52);
+    --nq-ink-faint: rgba(255, 255, 255, 0.24);
+
+    /* Glass surfaces */
+    --nq-glass-card: rgba(14, 11, 4, 0.62);
+    --nq-glass-inner: rgba(255, 255, 255, 0.042);
+    --nq-glass-input: rgba(255, 255, 255, 0.038);
+    --nq-glass-input-f: rgba(212, 175, 55, 0.085);
+    --nq-glass-upload: rgba(212, 175, 55, 0.048);
+
+    /* Borders */
+    --nq-border: rgba(212, 175, 55, 0.20);
+    --nq-border-strong: rgba(212, 175, 55, 0.55);
+    --nq-border-faint: rgba(212, 175, 55, 0.10);
+
+    /* Glow */
+    --nq-glow-card: rgba(212, 175, 55, 0.12);
+    --nq-glow-input: rgba(212, 175, 55, 0.10);
+    --nq-glow-btn: rgba(212, 175, 55, 0.45);
+
+    /* Radius */
+    --nq-r-sm: 8px;
+    --nq-r-md: 14px;
+    --nq-r-lg: 22px;
+    --nq-r-xl: 30px;
+
+    /* Motion */
+    --nq-ease: cubic-bezier(.4, 0, .2, 1);
+    --nq-t-fast: .17s;
+    --nq-t-med: .32s;
+    --nq-t-slow: .58s;
+
+    /* Font */
+    font-family: 'Cairo', sans-serif;
+}
+
+/* ============================================================
+    SCOPED RESET — only inside this view
+============================================================ */
+.nq-view-root *,
+.nq-view-root *::before,
+.nq-view-root *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================================
+    VIEW WRAPPER
+    This is the mountpoint. Parent layout controls the page bg.
+============================================================ */
+.nq-view-root {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100%;
+    width: 100%;
+}
+
+/* ============================================================
+    CARD
+============================================================ */
+.nq-card {
+    width: 100%;
+    max-width: 800px;
+    background: var(--nq-glass-card);
+    border: 1px solid var(--nq-border);
+    border-radius: var(--nq-r-xl);
+    backdrop-filter: blur(36px) saturate(1.5);
+    -webkit-backdrop-filter: blur(36px) saturate(1.5);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, .045) inset,
+        0 2px 1px rgba(255, 255, 255, .04) inset,
+        0 12px 72px rgba(0, 0, 0, .62),
+        0 0 100px var(--nq-glow-card);
+    overflow: hidden;
+    position: relative;
+    animation: nqCardIn .70s var(--nq-ease) both;
+}
+
+@keyframes nqCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Diagonal gold seam — top-right to top-left */
+.nq-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 175, 55, .08) 15%,
+            var(--nq-gold-400) 45%,
+            var(--nq-gold-200) 55%,
+            rgba(212, 175, 55, .08) 85%,
+            transparent 100%);
+    pointer-events: none;
+}
+
+/* Ambient glow orb behind card */
+.nq-card::after {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -80px;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, .10) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Gold sweep animation across card — CSS only, triggered on card hover */
+.nq-card-shine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -120%;
+    width: 55%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, .045), transparent);
+    pointer-events: none;
+    animation: nqShine 5s var(--nq-ease) 1.2s infinite;
+}
+
+@keyframes nqShine {
+    0% {
+        left: -120%;
+        opacity: 0;
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 180%;
+        opacity: 0;
+    }
+}
+
+/* ============================================================
+    CARD HEADER
+============================================================ */
+.nq-card-header {
+    padding: clamp(28px, 5vw, 48px) clamp(24px, 6vw, 52px) 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Logomark */
+.nq-logomark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--nq-glass-inner);
+    border: 1px solid var(--nq-border);
+    box-shadow:
+        0 0 28px rgba(212, 175, 55, .18),
+        0 0 0 8px rgba(212, 175, 55, .04);
+    margin-bottom: 20px;
+    animation: nqLogoPulse 3s ease-in-out infinite;
+}
+
+@keyframes nqLogoPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 28px rgba(212, 175, 55, .18), 0 0 0 8px rgba(212, 175, 55, .04);
+    }
+
+    50% {
+        box-shadow: 0 0 42px rgba(212, 175, 55, .30), 0 0 0 8px rgba(212, 175, 55, .08);
+    }
+}
+
+.nq-company-name {
+    display: block;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .22em;
+    color: rgba(212, 175, 55, .55);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.nq-card-title {
+    font-size: clamp(1.45rem, 3.5vw, 1.9rem);
+    font-weight: 900;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--nq-gold-200) 0%, var(--nq-gold-400) 50%, var(--nq-gold-600) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+}
+
+.nq-card-desc {
+    font-size: .88rem;
+    font-weight: 400;
+    color: var(--nq-ink-muted);
+    line-height: 1.65;
+    margin-bottom: 6px;
+}
+
+/* Progress steps indicator */
+.nq-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-top: 28px;
+}
+
+.nq-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.nq-step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--nq-border);
+    background: var(--nq-glass-inner);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--nq-ink-faint);
+    transition: border-color var(--nq-t-med) var(--nq-ease),
+        color var(--nq-t-med) var(--nq-ease),
+        box-shadow var(--nq-t-med) var(--nq-ease);
+}
+
+.nq-step.is-active .nq-step-dot {
+    border-color: var(--nq-gold-400);
+    color: var(--nq-gold-400);
+    box-shadow: 0 0 12px rgba(212, 175, 55, .30);
+    background: rgba(212, 175, 55, .08);
+}
+
+.nq-step.is-done .nq-step-dot {
+    border-color: var(--nq-gold-600);
+    background: rgba(212, 175, 55, .12);
+    color: var(--nq-gold-400);
+}
+
+.nq-step-label {
+    font-size: .64rem;
+    color: var(--nq-ink-faint);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.nq-step.is-active .nq-step-label {
+    color: rgba(212, 175, 55, .70);
+}
+
+.nq-step.is-done .nq-step-label {
+    color: rgba(212, 175, 55, .45);
+}
+
+.nq-step-connector {
+    flex: 1;
+    min-width: 28px;
+    max-width: 56px;
+    height: 1px;
+    background: var(--nq-border-faint);
+    margin-bottom: 22px;
+}
+
+/* Divider under header */
+.nq-header-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--nq-border), transparent);
+    margin-top: 28px;
+}
+
+/* ============================================================
+    CARD BODY
+============================================================ */
+.nq-card-body {
+    padding: clamp(24px, 5vw, 44px) clamp(24px, 6vw, 52px) clamp(28px, 5vw, 48px);
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Section block ── */
+.nq-section {
+    margin-bottom: 36px;
+}
+
+.nq-section:last-of-type {
+    margin-bottom: 0;
+}
+
+.nq-section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.nq-section-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--nq-r-sm);
+    background: rgba(212, 175, 55, .08);
+    border: 1px solid var(--nq-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nq-section-title {
+    font-size: .95rem;
+    font-weight: 800;
+    color: var(--nq-gold-400);
+    letter-spacing: .04em;
+    line-height: 1;
+}
+
+.nq-section-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--nq-border), transparent);
+}
+
+/* ── Field grid ── */
+.nq-fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 20px;
+}
+
+.nq-field-full {
+    grid-column: 1 / -1;
+}
+
+/* ── Field ── */
+.nq-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.nq-label {
+    font-size: .775rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    color: var(--nq-gold-400);
+    padding-right: 2px;
+}
+
+/* Required star */
+.nq-label .nq-req {
+    color: rgba(212, 175, 55, .55);
+    margin-right: 3px;
+    font-weight: 400;
+}
+
+/* Base input / select styles */
+.nq-input,
+.nq-select {
+    width: 100%;
+    padding: 13px 16px;
+    font-family: 'Cairo', sans-serif;
+    font-size: .90rem;
+    font-weight: 500;
+    color: var(--nq-ink);
+    background: var(--nq-glass-input);
+    border: 1.5px solid var(--nq-border);
+    border-radius: var(--nq-r-md);
+    outline: none;
+    transition:
+        background var(--nq-t-fast) var(--nq-ease),
+        border-color var(--nq-t-fast) var(--nq-ease),
+        box-shadow var(--nq-t-fast) var(--nq-ease);
+    caret-color: var(--nq-gold-400);
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.nq-input::placeholder {
+    color: var(--nq-ink-faint);
+    font-weight: 300;
+}
+
+.nq-input:focus,
+.nq-select:focus {
+    background: var(--nq-glass-input-f);
+    border-color: var(--nq-gold-400);
+    box-shadow:
+        0 0 0 3px rgba(212, 175, 55, .11),
+        0 0 18px rgba(212, 175, 55, .09);
+}
+
+/* Hover state (non-focus) */
+.nq-input:hover:not(:focus),
+.nq-select:hover:not(:focus) {
+    border-color: rgba(212, 175, 55, .40);
+}
+
+/* Date input — native calendar icon tint */
+.nq-input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(75%) sepia(60%) saturate(400%) hue-rotate(5deg);
+    cursor: pointer;
+    opacity: .65;
+}
+
+/* Select wrapper (for custom arrow) */
+.nq-select-wrap {
+    position: relative;
+}
+
+.nq-select-wrap::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%) rotate(45deg);
+    width: 7px;
+    height: 7px;
+    border-right: 1.8px solid rgba(212, 175, 55, .55);
+    border-bottom: 1.8px solid rgba(212, 175, 55, .55);
+    pointer-events: none;
+    transition: border-color var(--nq-t-fast);
+}
+
+.nq-select-wrap:focus-within::after {
+    border-color: var(--nq-gold-400);
+}
+
+.nq-select {
+    padding-left: 40px;
+    /* space for arrow on LTR side (left in RTL layout) */
+}
+
+/* Select options (limited native styling) */
+.nq-select option {
+    background: #1a1408;
+    color: var(--nq-ink);
+    font-family: 'Cairo', sans-serif;
+}
+
+/* ── Section divider ── */
+.nq-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--nq-border), transparent);
+    margin: 30px 0;
+}
+
+/* ============================================================
+    UPLOAD ZONE
+============================================================ */
+.nq-uploads-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.nq-upload-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nq-upload-zone {
+    position: relative;
+    border: 1.5px dashed var(--nq-border);
+    border-radius: var(--nq-r-lg);
+    background: var(--nq-glass-upload);
+    padding: 28px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition:
+        border-color var(--nq-t-med) var(--nq-ease),
+        background var(--nq-t-med) var(--nq-ease),
+        box-shadow var(--nq-t-med) var(--nq-ease),
+        transform var(--nq-t-med) var(--nq-ease);
+    overflow: hidden;
+    min-height: 160px;
+}
+
+.nq-upload-zone:hover {
+    border-color: var(--nq-gold-400);
+    background: rgba(212, 175, 55, .07);
+    box-shadow:
+        0 0 28px rgba(212, 175, 55, .12),
+        0 0 0 1px rgba(212, 175, 55, .12) inset;
+    transform: translateY(-2px);
+}
+
+/* Focus-within (when inner file input is focused via keyboard) */
+.nq-upload-zone:focus-within {
+    border-color: var(--nq-gold-400);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, .14);
+    outline: none;
+}
+
+/* Invisible real file input covers entire zone */
+.nq-upload-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Visual preview placeholder (static — backend renders actual preview) */
+.nq-upload-preview {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--nq-r-sm);
+    background: rgba(212, 175, 55, .06);
+    border: 1px solid var(--nq-border-faint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background var(--nq-t-med) var(--nq-ease);
+}
+
+.nq-upload-zone:hover .nq-upload-preview {
+    background: rgba(212, 175, 55, .12);
+}
+
+.nq-upload-label {
+    font-size: .80rem;
+    font-weight: 700;
+    color: var(--nq-ink-muted);
+    line-height: 1.4;
+    transition: color var(--nq-t-fast);
+}
+
+.nq-upload-zone:hover .nq-upload-label {
+    color: var(--nq-ink);
+}
+
+.nq-upload-hint {
+    font-size: .68rem;
+    color: var(--nq-ink-faint);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* Gold badge on upload zone */
+.nq-upload-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: rgba(212, 175, 55, .10);
+    border: 1px solid var(--nq-border);
+    font-size: .60rem;
+    font-weight: 700;
+    color: rgba(212, 175, 55, .65);
+    letter-spacing: .06em;
+    pointer-events: none;
+}
+
+/* ============================================================
+    VALIDATION SUMMARY PLACEHOLDER
+============================================================ */
+.nq-validation-summary {
+    display: none;
+    background: rgba(180, 40, 40, .12);
+    border: 1px solid rgba(220, 60, 60, .28);
+    border-radius: var(--nq-r-md);
+    padding: 14px 18px;
+    margin-bottom: 22px;
+}
+
+.nq-validation-summary p {
+    font-size: .80rem;
+    color: #f08080;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.nq-field-error {
+    font-size: .72rem;
+    color: #e07878;
+    font-weight: 500;
+    display: none;
+}
+
+/* ============================================================
+    SUBMIT BUTTON
+============================================================ */
+.nq-submit-wrap {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+}
+
+.nq-btn-submit {
+    width: 100%;
+    padding: 17px 28px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: .05em;
+    color: #0c0800;
+    background: linear-gradient(135deg,
+            var(--nq-gold-200) 0%,
+            var(--nq-gold-400) 45%,
+            var(--nq-gold-600) 100%);
+    border: none;
+    border-radius: var(--nq-r-md);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        0 4px 32px rgba(212, 175, 55, .38),
+        0 1px 0 rgba(255, 255, 255, .22) inset;
+    transition:
+        transform var(--nq-t-fast) var(--nq-ease),
+        box-shadow var(--nq-t-fast) var(--nq-ease),
+        filter var(--nq-t-fast) var(--nq-ease);
+}
+
+.nq-btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 48px var(--nq-glow-btn),
+        0 1px 0 rgba(255, 255, 255, .22) inset;
+    filter: brightness(1.05);
+}
+
+.nq-btn-submit:active {
+    transform: translateY(0) scale(.985);
+    box-shadow: 0 3px 16px rgba(212, 175, 55, .28);
+}
+
+.nq-btn-submit:focus-visible {
+    outline: 2px solid var(--nq-gold-400);
+    outline-offset: 3px;
+}
+
+/* Shimmer pass on hover — CSS keyframe, no JS */
+.nq-btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -120%;
+    width: 60%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .28), transparent);
+    transform: skewX(-15deg);
+    pointer-events: none;
+}
+
+.nq-btn-submit:hover::before {
+    animation: nqBtnShimmer .50s var(--nq-ease) forwards;
+}
+
+@keyframes nqBtnShimmer {
+    from {
+        left: -120%;
+    }
+
+    to {
+        left: 160%;
+    }
+}
+
+.nq-btn-label {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Secure note under button */
+.nq-submit-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: .72rem;
+    color: var(--nq-ink-faint);
+    font-weight: 400;
+}
+
+/* ============================================================
+    RESPONSIVE
+============================================================ */
+@media (max-width: 580px) {
+    .nq-fields-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nq-field-full {
+        grid-column: 1;
+    }
+
+    .nq-uploads-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nq-upload-zone {
+        min-height: 130px;
+        padding: 22px 14px;
+    }
+
+    .nq-progress {
+        gap: 0;
+    }
+
+    .nq-step-connector {
+        min-width: 18px;
+        max-width: 32px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .nq-card-header,
+    .nq-card-body {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+    
+}
+@media (min-width : 375px) {
+    .nq-view-root {
+            padding-top: 100px;
+            padding-bottom: 100px;
+        }
+}
+
+/* ============================================================
+    REDUCED MOTION
+============================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+    .nq-view-root *,
+    .nq-view-root *::before,
+    .nq-view-root *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-canvas);
+    color: var(--text-primary);
+    min-height: 100svh;
+    overflow-x: hidden;
+    transition: background var(--t-slow), color var(--t-slow);
+    position: relative;
+}
+.loader-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    display: block;
+}
+/* Center logo mark */
+.loader-logo-mark {
+    position: relative;
+    z-index: 2;
+    animation: logoPulse 2.4s ease-in-out infinite;
+}
