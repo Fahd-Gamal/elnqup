@@ -1,0 +1,23 @@
+{
+"name": "النقيب للعقارات",
+"short_name": "النقيب",
+"start_url": "/",
+"display": "standalone",
+"background_color": "#0a0804",
+"theme_color": "#0a0804",
+"orientation": "portrait",
+"icons": [
+{
+    "src": "appIcon.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "maskable"
+},
+{
+    "src": "appIcon.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any"
+}
+]
+}
